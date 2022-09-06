@@ -64,8 +64,9 @@ class GetPosByTemplateMatch:
             min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)  # 最小匹配度，最大匹配度，最小匹配度的坐标，最大匹配度的坐标
             print(f"【debug】 Maximum matching: {max_val}, threshold: {threshold}")
             if max_val >= threshold:  # 计算相对坐标
-                position = [int(screen_width / img_src_width * (max_loc[0] + img_tmp_width / 2)),
-                            int(screen_height / img_src_height * (max_loc[1] + img_tmp_height / 2))]
+                # position = [int(screen_width / img_src_width * (max_loc[0] + img_tmp_width / 2)),
+                #             int(screen_height / img_src_height * (max_loc[1] + img_tmp_height / 2))]
+                position = [max_loc[0], max_loc[1]]
                 print(f"【debug】 Matching on ({position[0]}, {position[1]})")
                 return position
             else:
@@ -103,7 +104,6 @@ class GetPosBySiftMatch:
         :param target_img: cv2格式的目标图片
         :param screen_img: cv2格式的原图
         :param debug_status: 调试模式
-        :param i: 第几次匹配
         :return: 返回坐标(x,y) 与opencv坐标系对应
         """
         # 利用创建好的特征点检测器去检测两幅图像的特征关键点，
@@ -149,7 +149,6 @@ class GetPosBySiftMatch:
 
             # 绘制匹配成功的连线
             if debug_status:
-                # if other_setting[5]:
                 matches_mask = mask.ravel().tolist()  # ravel方法将数据降维处理，最后并转换成列表格式
                 draw_params = dict(matchColor=(0, 255, 0),  # draw matches in green color
                                    singlePointColor=None,
@@ -174,19 +173,21 @@ class GetPosBySiftMatch:
             return None
 
 if __name__ == '__main__':
-    # cap = cv2.imread(r"E:\learning\python\project\pyauto-script\process\egp\1000_200_508x517_175_38_20_5_3_1_1_2000_100_1000_100_90_matchEvent_finishEvent.png")
-    window = HandleSet.get_active_window(2)
-    cap = GetScreenCapture.window_screen(window[1], 500, 500)
+    cap = cv2.imread(
+        r"E:\learning\python\project\pyauto-script\process\egp\1000_200_508x517_175_38_20_5_3_1_1_2000_100_1000_100_90_2_matchEvent_finishEvent.png")
+    # window = HandleSet.get_active_window(2)
+    # cap = GetScreenCapture.window_screen(window[1], 500, 500)
     # ImgProcess.show_img(cap)
     # cap = ImgProcess.img_compress(cap, 0.9)
-    temp = cv2.imread(r"E:\learning\python\project\pyauto-script\process\egp\1000_200_508x517_175_38_20_5_3_1_1_2000_100_1000_100_90_matchEvent_finishEvent.png")
+    temp = cv2.imread(
+        r"E:\learning\python\project\pyauto-script\process\egp\1000_200_508x517_175_38_20_5_3_1_1_2000_100_1000_100_90_2_matchEvent_finishEvent.png")
     temp = cv2.cvtColor(temp, cv2.COLOR_BGR2GRAY)
     img_src_height = cap.shape[0]
     img_src_width = cap.shape[1]  # 匹配原图的宽高
     # print(GetPosByTemplateMatch.template_matching(cap, temp, img_src_width, img_src_height, 0.7, True, 1))
     # ImgProcess.show_img(temp)
     cap = cv2.cvtColor(cap, cv2.COLOR_BGR2GRAY)
-    temp = cv2.cvtColor(temp, cv2.COLOR_BGR2GRAY)
+
     cap1 = ImgProcess.get_sift(cap)
     temp1 = ImgProcess.get_sift(temp)
-    GetPosBySiftMatch.sift_matching(temp1, cap1, (img_src_height, img_src_width), temp, cap, True, 1)
+    print(GetPosBySiftMatch.sift_matching(temp1, cap1, (img_src_height, img_src_width), temp, cap, True))

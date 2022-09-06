@@ -54,7 +54,8 @@ class GetProcessesInfo:
             process["endDelayLeastTime"] = int(split[12])  # 当所有点击完后，至少多久不再去匹配模板 (ms)
             process["endDelayRandomTime"] = int(split[13])  # 额外等待随机时间ms
             process["threshold"] = int(split[14]) / 100  # 匹配阈值，大于该值时，触发点击事件，范围 0 - 100
-            process["matchEvent"] = os.path.join(targetProcessPath, split[15] + ".py")  # 匹配上后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py
-            process["finishEvent"] = os.path.join(targetProcessPath, split[16] + ".py")  # 所有操作都执行完后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py
+            process["useMatchingPosition"] = int(split[15]) # 使用该文件名定义的坐标 #1；还是截图上匹配到的图片坐标 #2
+            process["matchEvent"] = os.path.join(targetProcessPath, split[16] + ".py")  # 匹配上后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py
+            process["finishEvent"] = os.path.join(targetProcessPath, split[17] + ".py")  # 所有操作都执行完后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py
             processesInfo.append(process)
         return processesInfo

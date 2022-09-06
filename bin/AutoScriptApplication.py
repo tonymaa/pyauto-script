@@ -68,21 +68,27 @@ def main(intervalSelectWindow, processName, windowWidth, windowHeight,
         for process in processesInfo:
             img_src_height = screen.shape[0]
             img_src_width = screen.shape[1]  # 匹配原图的宽高
+            matchingPosition = None
             try:
                 if matchingMethod == 1:
-                    if GetPosByTemplateMatch.template_matching(screen, process.get("image"), img_src_width, img_src_height, process.get("threshold")) is None:
+                    matchingPosition = GetPosByTemplateMatch.template_matching(screen, process.get("image"), img_src_width, img_src_height, process.get("threshold"))
+                    if matchingPosition is None:
                         continue
                 elif matchingMethod == 2:
-                    if GetPosBySiftMatch.sift_matching(process.get("sift"), screenSift, (screen[0], screen[1]), process.get("image"), screen, True) is None:
+                    matchingPosition = GetPosBySiftMatch.sift_matching(process.get("sift"), screenSift, (screen[0], screen[1]), process.get("image"), screen, True)
+                    if matchingPosition is None:
                         continue
             except Exception:
+                import traceback
+                traceback.print_exc()
                 print(f"【error】 matching error... try again")
                 break
+            print(f"【debug】 matching position: ({matchingPosition[0]}, {matchingPosition[1]})")
             # 7. do click
             if isBackgroungRunning:
-                DoClickUtils.doWindowsClick(hwnd[1], process)
+                DoClickUtils.doWindowsClick(hwnd[1], process, matchingPosition)
             else:
-                DoClickUtils.doFrontWindowsClick(hwnd[1], process, isKeepActive)
+                DoClickUtils.doFrontWindowsClick(hwnd[1], process, matchingPosition, isKeepActive)
 
 if __name__ == "__main__":
     main(3, "egp", 800, 700, False, True, 800, matchingMethod=1)

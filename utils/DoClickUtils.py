@@ -16,7 +16,7 @@ class DoClickUtils:
             exec(r.read())
 
     @staticmethod
-    def doWindowsClick(handleNum, process):
+    def doWindowsClick(handleNum, process, matchingPosition):
         if process is None: return False
 
         # load事件调用
@@ -35,8 +35,15 @@ class DoClickUtils:
         for i in range(loopTimes):
             # 一次点击
             # 鼠标移动到指定位置
-            x = process["relativeClickPosition"][0]
-            y = process["relativeClickPosition"][1]
+            x = 0
+            y = 0
+            if process["useMatchingPosition"] == 1:
+                x = process["relativeClickPosition"][0]
+                y = process["relativeClickPosition"][1]
+            else:
+                x = matchingPosition[0]
+                y = matchingPosition[1]
+
             x += round(random.random() * process["randomRightOffset"])
             y += round(random.random() * process["randomBottomOffset"])
             print(f"【debug】 x, y move to ({x}, {y})")
@@ -82,7 +89,7 @@ class DoClickUtils:
         except Exception: pass
 
     @staticmethod
-    def doFrontWindowsClick(handleNum, process, isKeepActive):
+    def doFrontWindowsClick(handleNum, process, matchingPosition, isKeepActive):
         if process is None: return False
 
         # load事件调用
@@ -106,8 +113,14 @@ class DoClickUtils:
                 shell.SendKeys('%')
                 SetForegroundWindow(handleNum)
             # 鼠标移动到指定位置
-            x = process["relativeClickPosition"][0]
-            y = process["relativeClickPosition"][1]
+            x = 0
+            y = 0
+            if process["useMatchingPosition"] == 1:
+                x = process["relativeClickPosition"][0]
+                y = process["relativeClickPosition"][1]
+            else:
+                x = matchingPosition[0]
+                y = matchingPosition[1]
             x += round(random.random() * process["randomRightOffset"])
             y += round(random.random() * process["randomBottomOffset"])
             now_pos = position() # 记录当前鼠标位置
