@@ -18,16 +18,11 @@ from PIL import ImageGrab
 
 class GetScreenCapture:
     def __init__(self, handle_num=0, handle_width=0, handle_height=0):
-        super(GetScreenCapture, self).__init__()
-        self.hwd_num = handle_num
-        self.screen_width = handle_width
-        self.screen_height = handle_height
+        pass
 
-    def window_screen(self):
+    @staticmethod
+    def window_screen(hwnd, screen_width, screen_height):
         """windows api 窗体截图方法，可后台截图，可被遮挡，不兼容部分窗口"""
-        hwnd = self.hwd_num
-        screen_width = self.screen_width
-        screen_height = self.screen_height
 
         # 返回句柄窗口的设备环境，覆盖整个窗口，包括非客户区，标题栏，菜单，边框
         hwnd_dc = GetWindowDC(hwnd)
@@ -98,8 +93,7 @@ class GetScreenCapture:
 
 if __name__ == '__main__':
     # capture screen
-    capture = GetScreenCapture(67596, 1234-46, 1019-24)
-    capture.window_screen()
+    GetScreenCapture.window_screen()
 
     # capture phone screen
     GetScreenCapture.adb_screen("258905d3")

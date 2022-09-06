@@ -6,7 +6,7 @@
 import cv2
 from numpy import int32, float32
 
-from ImageProcessUtils import ImgProcess
+from utils.ImageProcessUtils import ImgProcess
 
 # rc = ReadConfigFile()
 # other_setting = rc.read_config_other_setting()
