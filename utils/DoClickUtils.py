@@ -2,7 +2,7 @@
 # @Link    : https://github.com/aicezam/SmartOnmyoji
 # @Version : Python3.7.6
 # @MIT License Copyright (c) 2022 ACE
-
+import time
 from os.path import abspath, dirname
 from time import sleep
 import random
@@ -10,35 +10,83 @@ import win32com.client
 from win32gui import SetForegroundWindow, GetWindowRect
 from win32api import MAKELONG, SendMessage
 from win32con import WM_LBUTTONUP, WM_LBUTTONDOWN, WM_ACTIVATE, WA_ACTIVE
+import math
 from pyautogui import position, click, moveTo
-from HandleSetUtils import HandleSet
+from utils.HandleSetUtils import HandleSet
 
-def doWindowsClick(handleNum, process): pass
+class DoClickUtils:
+    def __init__(self): pass
 
+    def doInvoke(invokePath):
+        with open(".\\process\\egp\\finishEvent.py", mode="r", encoding="utf-8") as r:
+            exec(r.read())
 
+    @staticmethod
+    def doWindowsClick(handleNum, process):
+        if process is None: return False
 
-    # def windows_click(self):
-    #     """
-    #     点击目标位置,可后台点击（仅兼容部分窗体程序）
-    #     """
-    #     if self.pos is not None:
-    #
-    #         px = random.randint(-click_deviation - 5, click_deviation + 5)  # 设置随机偏移范围，避免封号
-    #         py = random.randint(-click_deviation - 5, click_deviation + 5)
-    #
-    #         # 模拟鼠标指针 点击指定位置
-    #         long_position = MAKELONG(cx, cy)
-    #         SendMessage(handle_num, WM_ACTIVATE, WA_ACTIVE, 0)
-    #         # SendMessage(handle_num, WM_LBUTTONDOWN, MK_LBUTTON, long_position)  # 模拟鼠标按下
-    #         # sleep(0.05)
-    #         # SendMessage(handle_num, WM_LBUTTONUP, MK_LBUTTON, long_position)  # 模拟鼠标弹起
-    #         SendMessage(handle_num, WM_LBUTTONDOWN, 0, long_position)  # 模拟鼠标按下
-    #         sleep(0.05)
-    #         SendMessage(handle_num, WM_LBUTTONUP, 0, long_position)  # 模拟鼠标弹起
-    #
-    #         print(f"<br>点击坐标: [ {cx} , {cy} ] <br>窗口名称: [ {HandleSet.get_handle_title(handle_num)} ]")
-    #
-    #
+        # load事件调用
+        print(f"【debug】 invoke function matchEvent")
+        try:
+            if process["matchEvent"] != None and process["matchEvent"] != "":
+                DoClickUtils.doInvoke(process["matchEvent"])
+        except Exception: pass
+
+        # 延时
+        sleepTime = (process["delayTime"] / 1000) + (random.random() * process["randomDelayTime"] / 1000)
+        print(f"【debug】 sleep {sleepTime} second")
+        time.sleep(sleepTime) # sleep
+
+        loopTimes = process["loopLeastCount"] + round(random.random() * process["loopRandomCount"])
+        for i in range(loopTimes):
+            # 一次点击
+            # 鼠标移动到指定位置
+            x = process["relativeClickPosition"][0]
+            y = process["relativeClickPosition"][1]
+            x += round(random.random() * process["randomRightOffset"])
+            y += round(random.random() * process["randomBottomOffset"])
+            print(f"【debug】 x, y move to ({x}, {y})")
+            # 鼠标按下
+            position = MAKELONG(x, y)
+            SendMessage(handleNum, WM_ACTIVATE, WA_ACTIVE, 0)
+            SendMessage(handleNum, WM_LBUTTONDOWN, 0, position)  # 模拟鼠标按下
+            print(f"【debug】 click down at ({x}, {y})")
+            # 延时
+            sleepTime = (process["delayUpTime"] / 1000) + (random.random() * process["delayRandomUpTime"] / 1000)
+            print(f"【debug】 sleep {sleepTime} second")
+            time.sleep(sleepTime)
+
+            # 微小偏移
+            x += random.random() * process["randomOffsetWhenUp"]
+            x -= random.random() * process["randomOffsetWhenUp"]
+            y += random.random() * process["randomOffsetWhenUp"]
+            y -= random.random() * process["randomOffsetWhenUp"]
+            x = round(x)
+            y = round(y)
+            print(f"【debug】 click up at ({x}, {y})")
+
+            # 鼠标抬起
+            position = MAKELONG(x, y)
+            SendMessage(handleNum, WM_LBUTTONUP, 0, position)  # 模拟鼠标弹起
+            print(f"<br>【第 {i + 1} 次】点击坐标: [ {x} , {y} ] <br>窗口名称: [ {HandleSet.get_handle_title(handleNum)} ]")
+
+            # 点击一次后的延时
+            sleepTime = (process["loopDelayLeastTime"] / 1000) + (random.random() * process["loopDelayRandomTime"] / 1000)
+            print(f"【debug】 sleep {sleepTime} second")
+            time.sleep(sleepTime)
+
+        # 结束延时
+        sleepTime = (process["endDelayLeastTime"] / 1000) + (random.random() * process["endDelayRandomTime"] / 1000)
+        print(f"【debug】 sleep {sleepTime} second")
+        time.sleep(sleepTime)
+
+        # 结束事件调用
+        print(f"【debug】 invoke function finishEvent")
+        try:
+            if process["finishEvent"] != None and process["finishEvent"] != "":
+                DoClickUtils.doInvoke(process["finishEvent"])
+        except Exception: pass
+
     # def adb_click(self, device_id):
     #     """数据线连手机点击"""
     #     if self.pos is not None:
@@ -107,7 +155,7 @@ def doWindowsClick(handleNum, process): pass
     #
     #     return True
 
-if __name__ == '__main__':
-    handle = HandleSet.get_active_window(3)
-    doWindowsClick(handle[1], [{'shape': (54, 227), 'filePath': '.\\process\\egp\\1000_200_508x517_175_38_20_5_3_1_1_1000_100_matchEvent_finishEvent.png', 'fileName': '1000_200_508x517_175_38_20_5_3_1_1_1000_100_matchEvent_finishEvent.png', 'sift': None, 'image': None, 'delayTime': 1000, 'randomDelayTime': 200, 'relativeClickPosition': [508, 517], 'randomRightOffset': 175, 'randomBottomOffset': 38, 'delayUpTime': 20, 'delayRandomUpTime': 5, 'randomOffsetWhenUp': 3, 'loopLeastCount': 1, 'loopRandomCount': 1, 'endDelayLeastTime': 1000, 'endDelayRandomTime': 100, 'matchEvent': '.\\process\\egp\\matchEvent.py', 'finishEvent': '.\\process\\egp\\finishEvent.py'}]
-)
+# if __name__ == '__main__':
+#     handle = HandleSet.get_active_window(3)
+#     DoClickUtils.doWindowsClick(handle[1], [{'shape': (54, 227), 'filePath': '.\\process\\egp\\1000_200_508x517_175_38_20_5_3_1_1_1000_100_matchEvent_finishEvent.png', 'fileName': '1000_200_508x517_175_38_20_5_3_1_1_1000_100_matchEvent_finishEvent.png', 'sift': None, 'image': None, 'delayTime': 1000, 'randomDelayTime': 200, 'relativeClickPosition': [508, 517], 'randomRightOffset': 175, 'randomBottomOffset': 38, 'delayUpTime': 20, 'delayRandomUpTime': 5, 'randomOffsetWhenUp': 3, 'loopLeastCount': 1, 'loopRandomCount': 1, 'endDelayLeastTime': 1000, 'endDelayRandomTime': 100, 'matchEvent': '.\\process\\egp\\matchEvent.py', 'finishEvent': '.\\process\\egp\\finishEvent.py'}])
+

@@ -22,7 +22,9 @@ class GetProcessesInfo:
             print("<br>未找到目标文件夹或图片地址！")
             return None  # 脚本结束
         processesInfo = []
+        fileTypes = (".png", ".jpg")
         for fileName in listdir:
+            if len(fileName) >= 4 and fileName[-4:].lower() not in fileTypes: continue
             process = {}
             filePath = os.path.join(targetProcessPath, fileName)
             # image = cv2.imread(filePath)
@@ -34,7 +36,8 @@ class GetProcessesInfo:
             process["sift"] = ImgProcess.get_sift(image)
             process["image"] = image
             # 解析文件名
-            fileName = fileName.rstrip(".png").rstrip(".jpg").rstrip(".PNG").rstrip(".PNG")
+            # fileName = fileName.rstrip(".png").rstrip(".jpg").rstrip(".PNG").rstrip(".PNG")
+            for type in fileTypes: fileName = fileName.rstrip(type)
             split = fileName.split("_")
             process["delayTime"] = int(split[0])  # 绝对点击时间：匹配上后多久点击（绝对时间ms）
             process["randomDelayTime"] = int(split[1])  # 点击时间随机延迟量：过了绝对点击时间后，随机延迟多久时间（ms）
@@ -46,9 +49,11 @@ class GetProcessesInfo:
             process["randomOffsetWhenUp"] = int(split[7])  # 鼠标down 与 up 期间，随机向各个角度的偏移量，一般几个像素点
             process["loopLeastCount"] = int(split[8])  # 至少循环点击几次
             process["loopRandomCount"] = int(split[9])  # 额外随机点击次数
-            process["endDelayLeastTime"] = int(split[10])  # 当点击完后，至少多久不再去匹配模板 (ms)
-            process["endDelayRandomTime"] = int(split[11])  # 额外等待随机时间ms
-            process["matchEvent"] = os.path.join(targetProcessPath, split[12] + ".py")  # 匹配上后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py
-            process["finishEvent"] = os.path.join(targetProcessPath, split[13] + ".py")  # 所有操作都执行完后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py
+            process["loopDelayLeastTime"] = int(split[10])  # 每次随机点击结束后的延迟时间
+            process["loopDelayRandomTime"] = int(split[11])  # 每次随机点击结束后的延迟时间后，额外延迟时间
+            process["endDelayLeastTime"] = int(split[12])  # 当所有点击完后，至少多久不再去匹配模板 (ms)
+            process["endDelayRandomTime"] = int(split[13])  # 额外等待随机时间ms
+            process["matchEvent"] = os.path.join(targetProcessPath, split[14] + ".py")  # 匹配上后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py
+            process["finishEvent"] = os.path.join(targetProcessPath, split[15] + ".py")  # 所有操作都执行完后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py
             processesInfo.append(process)
         return processesInfo

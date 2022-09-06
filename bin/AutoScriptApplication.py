@@ -3,6 +3,7 @@ import time
 from numpy import uint8, fromfile
 import cv2
 
+from utils.DoClickUtils import DoClickUtils
 from utils.GetProcessesInfo import GetProcessesInfo
 from utils.GetScreenCaptureUtils import GetScreenCapture
 from utils.HandleSetUtils import HandleSet
@@ -42,8 +43,17 @@ def main():
     # 6. 循环截图，比对processesInfo里的图片信息
 
     # 7. do click
-
-
+    DoClickUtils.doWindowsClick(hwnd[1], {'shape': (54, 227),
+                                            'filePath': '.\\process\\egp\\1000_200_508x517_175_38_20_5_3_1_1_1000_100_matchEvent_finishEvent.png',
+                                            'fileName': '1000_200_508x517_175_38_20_5_3_1_1_1000_100_matchEvent_finishEvent.png',
+                                            'sift': None, 'image': None, 'delayTime': 1000, 'randomDelayTime': 200,
+                                            'relativeClickPosition': [508, 517], 'randomRightOffset': 175,
+                                            'randomBottomOffset': 38, 'delayUpTime': 20, 'delayRandomUpTime': 5,
+                                            'randomOffsetWhenUp': 3, 'loopLeastCount': 1, 'loopRandomCount': 1,
+                                            'endDelayLeastTime': 1000, 'endDelayRandomTime': 100,
+                                            'matchEvent': '.\\process\\egp\\matchEvent.py',
+                                            'finishEvent': '.\\process\\egp\\finishEvent.py', 'loopDelayLeastTime': 2000, 'loopDelayRandomTime': 100})
 
 if __name__ == "__main__":
     main()
+

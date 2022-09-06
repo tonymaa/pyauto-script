@@ -18,14 +18,14 @@
    8. 【random offset when up】鼠标down 与 up 期间，随机向各个角度的偏移量，一般几个像素点
    9. 【loop least count】至少循环点击几次
    10. 【loop random count】额外随机点击次数 
-   11. 【end delay least time】当点击完后，至少多久不再去匹配模板 (ms)
-   12. 【end delay random time】额外等待随机时间ms
-   13. 【match event】匹配上后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py
-   14. 【finish event】所有操作都执行完后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py 
+   11. 【loop delay least time】每次随机点击结束后的延迟时间
+   12. 【loop delay random time】每次随机点击结束后的延迟时间后，额外延迟时间
+   13. 【end delay least time】当点击完后，至少多久不再去匹配模板 (ms)
+   14. 【end delay random time】额外等待随机时间ms
+   15. 【match event】匹配上后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py
+   16. 【finish event】所有操作都执行完后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py 
    如：
-       1. Dt1000Rdt200Rcp100x200Rro50Rbo50Dut20Drut5Rob8Llc1Lrc1Edlt1000Edrt100_Me=matchEvent_Fe=finishEvent.png
-       2. Dt1000Rdt200Rcp508x517Rro175Rbo38Dut20Drut5Rob3Llc1Lrc1Edlt1000Edrt100_Me=matchEvent_Fe=finishEvent.png
-       3. 1000_200_508x517_175_38_20_5_3_1_1_1000_100_matchEvent_finishEvent.png
+       1. 1000_200_508x517_175_38_20_5_3_1_1_2000_100_1000_100_matchEvent_finishEvent.png
 6. 按照解析信息进行操作
 
    
