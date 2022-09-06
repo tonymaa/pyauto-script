@@ -21,9 +21,11 @@ class GetScreenCapture:
         pass
 
     @staticmethod
-    def window_screen(hwnd, screen_width, screen_height):
+    def window_screen(hwnd):
         """windows api 窗体截图方法，可后台截图，可被遮挡，不兼容部分窗口"""
-
+        x1, y1, x2, y2 = GetWindowRect(hwnd)  # 获取窗口坐标
+        screen_width = x2 - x1
+        screen_height = y2 - y1
         # 返回句柄窗口的设备环境，覆盖整个窗口，包括非客户区，标题栏，菜单，边框
         hwnd_dc = GetWindowDC(hwnd)
         # 创建设备描述表
@@ -59,17 +61,18 @@ class GetScreenCapture:
         mfc_dc.DeleteDC()
         return im_opencv
 
-    def window_screen_bk(self):
+    @staticmethod
+    def front_window_screen(hwnd, isKeepActive):
         """PIL截图方法，不能被遮挡"""
-        shell = win32com.client.Dispatch("WScript.Shell")
-        shell.SendKeys('%')
-        SetForegroundWindow(self.hwd_num)  # 窗口置顶
-        time.sleep(0.2)  # 置顶后等0.2秒再截图
-        x1, y1, x2, y2 = GetWindowRect(self.hwd_num)  # 获取窗口坐标
+        if isKeepActive:
+            shell = win32com.client.Dispatch("WScript.Shell")
+            shell.SendKeys('%')
+            SetForegroundWindow(hwnd)  # 窗口置顶
+        # time.sleep(0.2)  # 置顶后等0.2秒再截图
+        x1, y1, x2, y2 = GetWindowRect(hwnd)  # 获取窗口坐标
         grab_image = ImageGrab.grab((x1, y1, x2, y2))  # 用PIL方法截图
         im_cv2 = array(grab_image)  # 转换为cv2的矩阵格式
         im_opencv = cv2.cvtColor(im_cv2, cv2.COLOR_BGRA2GRAY)
-
         return im_opencv
 
     @staticmethod

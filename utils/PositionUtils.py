@@ -6,10 +6,12 @@
 import cv2
 from numpy import int32, float32
 
-from utils.ImageProcessUtils import ImgProcess
+from utils.HandleSetUtils import HandleSet
+from utils.ImageUtils import ImgProcess
 
 # rc = ReadConfigFile()
 # other_setting = rc.read_config_other_setting()
+from utils.ScreenCaptureUtils import GetScreenCapture
 
 
 class GetPosByTemplateMatch:
@@ -49,7 +51,7 @@ class GetPosByTemplateMatch:
         return pos, i
 
     @staticmethod
-    def template_matching(img_src, template, screen_width, screen_height, val, debug_status, i):
+    def template_matching(img_src, template, screen_width, screen_height, threshold):
         """获取坐标"""
         # img_src = cv2.cvtColor(img_src, cv2.COLOR_BGR2GRAY)
         # template = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
@@ -60,11 +62,11 @@ class GetPosByTemplateMatch:
             img_src_width = img_src.shape[1]  # 匹配原图的宽高
             res = cv2.matchTemplate(img_src, template, cv2.TM_CCOEFF_NORMED)
             min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)  # 最小匹配度，最大匹配度，最小匹配度的坐标，最大匹配度的坐标
-            if debug_status:
-                print(f"<br>第 [ {i+1} ] 张图片，匹配分数：[ {round(max_val,2)} ]")
-            if max_val >= val:  # 计算相对坐标
+            print(f"【debug】 Maximum matching: {max_val}, threshold: {threshold}")
+            if max_val >= threshold:  # 计算相对坐标
                 position = [int(screen_width / img_src_width * (max_loc[0] + img_tmp_width / 2)),
                             int(screen_height / img_src_height * (max_loc[1] + img_tmp_height / 2))]
+                print(f"【debug】 Matching on ({position[0]}, {position[1]})")
                 return position
             else:
                 return None
@@ -92,7 +94,7 @@ class GetPosBySiftMatch:
         return pos, i
 
     @staticmethod
-    def sift_matching(target_sift, screen_sift, target_hw, target_img, screen_img, debug_status, i):
+    def sift_matching(target_sift, screen_sift, target_hw, target_img, screen_img, debug_status):
         """
         特征点匹配，准确度不好说，用起来有点难受，不是那么准确（比如有两个按钮的情况下），但是待检测的目标图片不受缩放、旋转的影响
         :param target_sift: 目标的特征点信息
@@ -139,7 +141,7 @@ class GetPosBySiftMatch:
             if m.distance < 0.6 * n.distance:  # m表示大图像上最匹配点的距离，n表示次匹配点的距离，若比值小于0.5则舍弃
                 good.append(m)
         if debug_status:
-            print(f"<br>第 [ {i+1} ] 张图片，匹配角点数量：[ {len(good)} ] ,目标数量：[ {min_match_count} ]")
+            print(f"<br>匹配角点数量：[ {len(good)} ] ,目标数量：[ {min_match_count} ]")
         if len(good) > min_match_count:
             src_pts = float32([kp1[m.queryIdx].pt for m in good]).reshape(-1, 1, 2)
             dst_pts = float32([kp2[m.trainIdx].pt for m in good]).reshape(-1, 1, 2)
@@ -172,12 +174,17 @@ class GetPosBySiftMatch:
             return None
 
 if __name__ == '__main__':
-    cap = cv2.imread(r"E:\python\projects\auto-script\top\tony\autoScript\test\capture.png")
-    temp = cv2.imread(r"E:\python\projects\auto-script\top\tony\autoScript\test\template.png")
+    # cap = cv2.imread(r"E:\learning\python\project\pyauto-script\process\egp\1000_200_508x517_175_38_20_5_3_1_1_2000_100_1000_100_90_matchEvent_finishEvent.png")
+    window = HandleSet.get_active_window(2)
+    cap = GetScreenCapture.window_screen(window[1], 500, 500)
+    # ImgProcess.show_img(cap)
+    # cap = ImgProcess.img_compress(cap, 0.9)
+    temp = cv2.imread(r"E:\learning\python\project\pyauto-script\process\egp\1000_200_508x517_175_38_20_5_3_1_1_2000_100_1000_100_90_matchEvent_finishEvent.png")
+    temp = cv2.cvtColor(temp, cv2.COLOR_BGR2GRAY)
     img_src_height = cap.shape[0]
     img_src_width = cap.shape[1]  # 匹配原图的宽高
     # print(GetPosByTemplateMatch.template_matching(cap, temp, img_src_width, img_src_height, 0.7, True, 1))
-
+    # ImgProcess.show_img(temp)
     cap = cv2.cvtColor(cap, cv2.COLOR_BGR2GRAY)
     temp = cv2.cvtColor(temp, cv2.COLOR_BGR2GRAY)
     cap1 = ImgProcess.get_sift(cap)

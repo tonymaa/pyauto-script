@@ -82,7 +82,7 @@ class DoClickUtils:
         except Exception: pass
 
     @staticmethod
-    def doFrontWindowsClick(handleNum, process):
+    def doFrontWindowsClick(handleNum, process, isKeepActive):
         if process is None: return False
 
         # load事件调用
@@ -101,9 +101,10 @@ class DoClickUtils:
         for i in range(loopTimes):
             # 一次点击
             # 窗口置顶
-            shell = win32com.client.Dispatch("WScript.Shell")
-            shell.SendKeys('%')
-            SetForegroundWindow(handleNum)
+            if isKeepActive:
+                shell = win32com.client.Dispatch("WScript.Shell")
+                shell.SendKeys('%')
+                SetForegroundWindow(handleNum)
             # 鼠标移动到指定位置
             x = process["relativeClickPosition"][0]
             y = process["relativeClickPosition"][1]

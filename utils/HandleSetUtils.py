@@ -12,7 +12,7 @@ from time import sleep
 
 from win32api import OpenProcess
 from win32con import PROCESS_ALL_ACCESS
-from win32gui import GetWindowText, FindWindow, FindWindowEx, GetWindowRect, GetForegroundWindow
+from win32gui import GetWindowText, FindWindow, FindWindowEx, GetWindowRect, GetForegroundWindow, EnumWindows
 from win32process import NORMAL_PRIORITY_CLASS, REALTIME_PRIORITY_CLASS, SetPriorityClass, IDLE_PRIORITY_CLASS, \
     HIGH_PRIORITY_CLASS, GetWindowThreadProcessId, BELOW_NORMAL_PRIORITY_CLASS, ABOVE_NORMAL_PRIORITY_CLASS
 
@@ -207,7 +207,21 @@ class HandleSet:
             sound = abspath(dirname(__file__)) + r'\sounds\\end.wav'
             winsound.PlaySound(sound, winsound.SND_ALIAS)
 
+    @staticmethod
+    def find_windows_by_title(title):
+        windows = []
+        handlers = []
+        EnumWindows(lambda handler, param: param.append(handler), handlers)
+        for handler in handlers:
+            if GetWindowText(handler) == title:
+                windows.append(handler)
+        if len(windows) == 0: return None
+        return title, windows[0]
+
+
 if __name__ == '__main__':
     # print(HandleSet.get_active_window()) # ('Service Development Studio - Google Chrome', 67596)
     # print(HandleSet.adb_device_status()) # (True, ['258905d3'])
-    print(GetWindowRect(67596)) # (46, 24, 1234, 1019) left, top, right, bottom
+    # print(GetWindowRect(67596)) # (46, 24, 1234, 1019) left, top, right, bottom
+    print(HandleSet.find_windows_by_title("新文件 1 - Notepad++"))
+
