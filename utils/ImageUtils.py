@@ -7,11 +7,11 @@ from os.path import abspath, dirname
 import cv2
 
 
-class ImgProcess:
+class ImageUtils:
     """图像处理，传入的图片格式必须是cv2的格式"""
 
     def __init__(self):
-        super(ImgProcess, self).__init__()
+        super(ImageUtils, self).__init__()
 
     @staticmethod
     def save_img(img, img_path_name=r'.\image\screen_pic.jpg'):

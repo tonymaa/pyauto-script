@@ -6,7 +6,7 @@ from win32gui import SetForegroundWindow, GetWindowRect
 from win32api import MAKELONG, SendMessage
 from win32con import WM_LBUTTONUP, WM_LBUTTONDOWN, WM_ACTIVATE, WA_ACTIVE
 from pyautogui import position, click, moveTo, mouseDown, mouseUp
-from utils.HandleSetUtils import HandleSet
+from utils.HandleUtils import HandleUtils
 
 class DoClickUtils:
     def __init__(self): pass
@@ -69,7 +69,7 @@ class DoClickUtils:
             # 鼠标抬起
             position = MAKELONG(x, y)
             SendMessage(handleNum, WM_LBUTTONUP, 0, position)  # 模拟鼠标弹起
-            print(f"<br>【第 {i + 1} 次】点击坐标: [ {x} , {y} ] <br>窗口名称: [ {HandleSet.get_handle_title(handleNum)} ]")
+            print(f"<br>【第 {i + 1} 次】点击坐标: [ {x} , {y} ] <br>窗口名称: [ {HandleUtils.get_handle_title(handleNum)} ]")
 
             # 点击一次后的延时
             sleepTime = (process["loopDelayLeastTime"] / 1000) + (random.random() * process["loopDelayRandomTime"] / 1000)
@@ -145,7 +145,7 @@ class DoClickUtils:
             mouseUp()
             print(f"【debug】 click up at ({x}, {y})")
 
-            print(f"<br>【第 {i + 1} 次】点击坐标: [ {x} , {y} ] <br>窗口名称: [ {HandleSet.get_handle_title(handleNum)} ]")
+            print(f"<br>【第 {i + 1} 次】点击坐标: [ {x} , {y} ] <br>窗口名称: [ {HandleUtils.get_handle_title(handleNum)} ]")
 
             # 鼠标回去
             moveTo(now_pos[0], now_pos[1])
@@ -167,30 +167,39 @@ class DoClickUtils:
                 DoClickUtils.doInvoke(process["finishEvent"])
         except Exception: pass
 
-    # def adb_click(device_id):
-    #     """数据线连手机点击"""
-    #         # 使用modules下的adb工具执行adb命令
-    #         command = abspath(dirname(__file__)) + rf'\adb.exe -s {device_id} shell input tap {cx} {cy}'
-    #         HandleSet.deal_cmd(command)
-    #         # system(command)
-    #         print(f"<br>点击设备 [ {device_id} ] 坐标: [ {cx} , {cy} ]")
-    #
-    #         roll_num = random.randint(0, 99)
-    #         if roll_num < 10:
-    #             mx = random.randint(-50, 300) + cx
-    #             my = random.randint(-50, 300) + cy
-    #             sleep((random.randint(5, 15)) / 100)
-    #             command = abspath(dirname(__file__)) + rf'\adb.exe -s {device_id} shell input tap {mx} {my}'
-    #             HandleSet.deal_cmd(command)
-    #             print(f"<br>点击设备 [ {device_id} ] 坐标: [ {mx} , {my} ]")
-    #         elif 47 < roll_num < 50 or roll_num > 97:
-    #             mx = random.randint(200, 1000)
-    #             my = random.randint(200, 1000)
-    #             sleep((random.randint(5, 15)) / 100)
-    #             command = abspath(dirname(__file__)) + rf'\adb.exe -s {device_id} shell input tap {mx} {my}'
-    #             HandleSet.deal_cmd(command)
-    #             print(f"<br>点击设备 [ {device_id} ] 坐标: [ {mx} , {my} ]")
-    #
-    #         return True
+    @staticmethod
+    def adb_click(device_id):
+        """数据线连手机点击"""
+        if self.pos is not None:
+            pos = self.pos
+            click_deviation = int(self.click_deviation)
+            px = random.randint(-click_deviation - 5, click_deviation + 5)  # 设置随机偏移范围，避免封号
+            py = random.randint(-click_deviation - 5, click_deviation + 5)
+            cx = int(px + pos[0])
+            cy = int(py + pos[1])
+            # 使用modules下的adb工具执行adb命令
+            command = abspath(dirname(__file__)) + rf'\adb.exe -s {device_id} shell input tap {cx} {cy}'
+            HandleSet.deal_cmd(command)
+            # system(command)
+            print(f"<br>点击设备 [ {device_id} ] 坐标: [ {cx} , {cy} ]")
+
+            if other_setting[10]:  # 如果配置文件设置了额外随机点击
+                roll_num = random.randint(0, 99)
+                if roll_num < 10:
+                    mx = random.randint(-50, 300) + cx
+                    my = random.randint(-50, 300) + cy
+                    sleep((random.randint(5, 15)) / 100)
+                    command = abspath(dirname(__file__)) + rf'\adb.exe -s {device_id} shell input tap {mx} {my}'
+                    HandleSet.deal_cmd(command)
+                    print(f"<br>点击设备 [ {device_id} ] 坐标: [ {mx} , {my} ]")
+                elif 47 < roll_num < 50 or roll_num > 97:
+                    mx = random.randint(200, 1000)
+                    my = random.randint(200, 1000)
+                    sleep((random.randint(5, 15)) / 100)
+                    command = abspath(dirname(__file__)) + rf'\adb.exe -s {device_id} shell input tap {mx} {my}'
+                    HandleSet.deal_cmd(command)
+                    print(f"<br>点击设备 [ {device_id} ] 坐标: [ {mx} , {my} ]")
+
+            return True
 
 

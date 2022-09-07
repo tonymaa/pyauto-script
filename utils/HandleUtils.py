@@ -19,9 +19,9 @@ from win32process import NORMAL_PRIORITY_CLASS, REALTIME_PRIORITY_CLASS, SetPrio
 # from modules.ModuleGetConfig import ReadConfigFile
 
 
-class HandleSet:
+class HandleUtils:
     def __init__(self, handle_title, handle_num):
-        super(HandleSet, self).__init__()
+        super(HandleUtils, self).__init__()
         self.handle_pos = None
         self.handle_title = handle_title
         self.handle_num = int(handle_num)
@@ -150,7 +150,7 @@ class HandleSet:
             command = abspath(dirname(__file__)) + r'\adb.exe devices'  # adb放在modules目录下，不用那么麻烦安装adb命令了
             # result = HandleSet.deal_cmd('adb devices')
             # command = abspath(dirname(__file__)) + r'\adb.exe connect 127.0.0.1:7555'
-            result = HandleSet.deal_cmd(command)
+            result = HandleUtils.deal_cmd(command)
             result = result.decode("utf-8")
             if result.startswith('List of devices attached'):
                 # 查看连接设备
@@ -223,5 +223,5 @@ if __name__ == '__main__':
     # print(HandleSet.get_active_window()) # ('Service Development Studio - Google Chrome', 67596)
     # print(HandleSet.adb_device_status()) # (True, ['258905d3'])
     # print(GetWindowRect(67596)) # (46, 24, 1234, 1019) left, top, right, bottom
-    print(HandleSet.find_windows_by_title("新文件 1 - Notepad++"))
+    print(HandleUtils.find_windows_by_title("新文件 1 - Notepad++"))
 

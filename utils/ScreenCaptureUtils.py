@@ -16,7 +16,7 @@ import cv2
 from PIL import ImageGrab
 
 
-class GetScreenCapture:
+class ScreenCaptureUtils:
     def __init__(self, handle_num=0, handle_width=0, handle_height=0):
         pass
 
@@ -96,7 +96,9 @@ class GetScreenCapture:
 
 if __name__ == '__main__':
     # capture screen
-    GetScreenCapture.window_screen()
+    ScreenCaptureUtils.window_screen()
 
     # capture phone screen
-    GetScreenCapture.adb_screen("258905d3")
+    # status = HandleUtils.adb_device_status()
+    # print(status)
+    ScreenCaptureUtils.adb_screen("258905d3")

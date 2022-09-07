@@ -4,11 +4,11 @@ from numpy import uint8, fromfile
 import cv2
 
 from utils.DoClickUtils import DoClickUtils
-from utils.ImageUtils import ImgProcess
-from utils.PositionUtils import GetPosByTemplateMatch, GetPosBySiftMatch
-from utils.ProcessesInfo import GetProcessesInfo
-from utils.ScreenCaptureUtils import GetScreenCapture
-from utils.HandleSetUtils import HandleSet
+from utils.ImageUtils import ImageUtils
+from utils.PositionUtils import PositionUtils, GetPosBySiftMatch
+from utils.ProcessesInfoUtils import ProcessesInfoUtils
+from utils.ScreenCaptureUtils import ScreenCaptureUtils
+from utils.HandleUtils import HandleUtils
 import win32gui
 
 
@@ -24,17 +24,18 @@ import win32gui
     matchingMethod: 匹配算法：#1 模板匹配；#2 sift特征点匹配
     windowName: 可选参数，指定窗口的名字，找不到则选择窗口
     customDir: 所有图片模板的工作路径
+    compressionRatio: 截图压缩率，(0, 1] 浮点类型
 """
 def main(intervalSelectWindow, processName, windowWidth, windowHeight,
          isBackgroungRunning, isKeepActive, intervalScreenShot,
-         matchingMethod = 1, windowName = None, customDir=".\\process"):
+         matchingMethod = 1, windowName = None, customDir=".\\process", compressionRatio = 0.5):
     # 1. 点击目标窗口/输入目标窗口 获取窗口句柄
     # windows
     hwnd = None
     if windowName is not None:
-        hwnd = HandleSet.find_windows_by_title(windowName)
+        hwnd = HandleUtils.find_windows_by_title(windowName)
     if hwnd is None:
-        hwnd = HandleSet.get_active_window(intervalSelectWindow) # ('Service Development Studio - Google Chrome', 67596)
+        hwnd = HandleUtils.get_active_window(intervalSelectWindow) # ('Service Development Studio - Google Chrome', 67596)
     
     # Android phone
     # print(HandleSet.adb_device_status()) # (True, ['258905d3'])
@@ -46,34 +47,46 @@ def main(intervalSelectWindow, processName, windowWidth, windowHeight,
 
     # 4. 当匹配上模板文件夹（放置在指定目录下）中的其中一个时，读取该模板图片的文件名，
     # 5. 解析一些信息
-    processesInfo = GetProcessesInfo.get(processName, customDir)
+    processesInfo = ProcessesInfoUtils.get(processName, customDir)
     # print(processesInfo)
     # 6. 循环截图目标窗口，将截图与模板图片进行匹配（模板图片是截图中的一小部分，预处理时需保证分辨率一致）
     while True:
         time.sleep(intervalScreenShot / 1000)
         # capture screen
         screen = None
+        # 是否后台运行
         if isBackgroungRunning:
-            screen = GetScreenCapture.window_screen(hwnd[1])
+            screen = ScreenCaptureUtils.window_screen(hwnd[1]) # 后台截图
         else:
-            screen = GetScreenCapture.front_window_screen(hwnd[1], isKeepActive)
+            screen = ScreenCaptureUtils.front_window_screen(hwnd[1], isKeepActive) # 前台截图
         screenSift = None
+        # 采用sift算法
         if matchingMethod == 2:
-            screenSift = ImgProcess.get_sift(screen)
-        # ImgProcess.show_img(screen)
-        # ImgProcess.save_img(screen)
+            screenSift = ImageUtils.get_sift(screen)
+        # 截图压缩
+        originalScreenWidth = screen.shape[1]
+        originalScreenHeight = screen.shape[0]
+        if compressionRatio != 1:
+            screen = ImageUtils.img_compress(screen, compressionRatio)
+
+        # ImageUtils.show_img(screen)
+        # ImageUtils.save_img(screen)
         # capture phone screen
         # GetScreenCapture.adb_screen("258905d3")
         # compare template
         for process in processesInfo:
-            img_src_height = screen.shape[0]
-            img_src_width = screen.shape[1]  # 匹配原图的宽高
             matchingPosition = None
             try:
+                # 模板匹配
                 if matchingMethod == 1:
-                    matchingPosition = GetPosByTemplateMatch.template_matching(screen, process.get("image"), img_src_width, img_src_height, process.get("threshold"))
+                    # 模板压缩
+                    template = process.get("image")
+                    if compressionRatio != 1:
+                        template = ImageUtils.img_compress(template, compressionRatio)
+                    matchingPosition = PositionUtils.template_matching(screen, template, originalScreenWidth, originalScreenHeight, process.get("threshold"))
                     if matchingPosition is None:
                         continue
+                # 特征点查找
                 elif matchingMethod == 2:
                     matchingPosition = GetPosBySiftMatch.sift_matching(process.get("sift"), screenSift, (screen[0], screen[1]), process.get("image"), screen, True)
                     if matchingPosition is None:
@@ -91,5 +104,9 @@ def main(intervalSelectWindow, processName, windowWidth, windowHeight,
                 DoClickUtils.doFrontWindowsClick(hwnd[1], process, matchingPosition, isKeepActive)
 
 if __name__ == "__main__":
-    main(3, "egp", 800, 700, False, True, 800, matchingMethod=1)
-
+    # main(3, "egp", 800, 700, False, True, 800, matchingMethod=1, compressionRatio=1)
+    deviceStatus, deviceIds = HandleUtils.adb_device_status()
+    if deviceStatus:
+        selectedDevice = 0
+        screen = ScreenCaptureUtils.adb_screen(deviceIds[selectedDevice])
+        ImageUtils.show_img(screen)

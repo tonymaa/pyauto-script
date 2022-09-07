@@ -1,9 +1,9 @@
 import os
 from numpy import uint8, fromfile
 import cv2
-from utils.ImageUtils import ImgProcess
+from utils.ImageUtils import ImageUtils
 
-class GetProcessesInfo:
+class ProcessesInfoUtils:
     def __init__(self): pass
 
     @staticmethod
@@ -33,7 +33,7 @@ class GetProcessesInfo:
             process["filePath"] = filePath
             process["fileName"] = fileName
             image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            process["sift"] = ImgProcess.get_sift(image)
+            process["sift"] = ImageUtils.get_sift(image)
             process["image"] = image
             # 解析文件名
             # fileName = fileName.rstrip(".png").rstrip(".jpg").rstrip(".PNG").rstrip(".PNG")

@@ -6,17 +6,17 @@
 import cv2
 from numpy import int32, float32
 
-from utils.HandleSetUtils import HandleSet
-from utils.ImageUtils import ImgProcess
+from utils.HandleUtils import HandleUtils
+from utils.ImageUtils import ImageUtils
 
 # rc = ReadConfigFile()
 # other_setting = rc.read_config_other_setting()
-from utils.ScreenCaptureUtils import GetScreenCapture
+from utils.ScreenCaptureUtils import ScreenCaptureUtils
 
 
-class GetPosByTemplateMatch:
+class PositionUtils:
     def __init__(self):
-        super(GetPosByTemplateMatch, self).__init__()
+        super(PositionUtils, self).__init__()
 
     @staticmethod
     def get_pos_by_template(screen_capture, target_pic, debug_status):
@@ -35,38 +35,39 @@ class GetPosByTemplateMatch:
         # print("<br>正在匹配…")
         for i in range(len(target_pic)):
             # print(i)
-            pos = GetPosByTemplateMatch.template_matching(screen_capture,
-                                                          target_pic[i],
-                                                          screen_width,
-                                                          screen_high,
-                                                          val,
-                                                          debug_status,
-                                                          i)
+            pos = PositionUtils.template_matching(screen_capture,
+                                                  target_pic[i],
+                                                  screen_width,
+                                                  screen_high,
+                                                  val,
+                                                  debug_status,
+                                                  i)
             if pos is not None:
                 if debug_status:
                     # if other_setting[5]:
-                    draw_img = ImgProcess.draw_pos_in_img(screen_capture, pos, [screen_high / 10, screen_width / 10])
-                    ImgProcess.show_img(draw_img)
+                    draw_img = ImageUtils.draw_pos_in_img(screen_capture, pos, [screen_high / 10, screen_width / 10])
+                    ImageUtils.show_img(draw_img)
                 break
         return pos, i
 
     @staticmethod
-    def template_matching(img_src, template, screen_width, screen_height, threshold):
+    def template_matching(img_src, template, originalScreenWidth, originalScreenHeight, threshold):
         """获取坐标"""
         # img_src = cv2.cvtColor(img_src, cv2.COLOR_BGR2GRAY)
         # template = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
         if (img_src is not None) and (template is not None):
             img_tmp_height = template.shape[0]
             img_tmp_width = template.shape[1]  # 获取模板图片的高和宽
-            img_src_height = img_src.shape[0]
-            img_src_width = img_src.shape[1]  # 匹配原图的宽高
+            resizeHeight = img_src.shape[0]
+            resizeWidth = img_src.shape[1]  # 匹配原图的宽高
             res = cv2.matchTemplate(img_src, template, cv2.TM_CCOEFF_NORMED)
             min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)  # 最小匹配度，最大匹配度，最小匹配度的坐标，最大匹配度的坐标
             print(f"【debug】 Maximum matching: {max_val}, threshold: {threshold}")
             if max_val >= threshold:  # 计算相对坐标
                 # position = [int(screen_width / img_src_width * (max_loc[0] + img_tmp_width / 2)),
                 #             int(screen_height / img_src_height * (max_loc[1] + img_tmp_height / 2))]
-                position = [max_loc[0], max_loc[1]]
+                position = [round(originalScreenWidth / resizeWidth * max_loc[0]), round(originalScreenHeight / resizeHeight * max_loc[1])]
+                print(f"【debug】originalScreenWidth: {originalScreenWidth}, resizeWidth: {resizeWidth}")
                 print(f"【debug】 Matching on ({position[0]}, {position[1]})")
                 return position
             else:
@@ -156,7 +157,7 @@ class GetPosBySiftMatch:
                                    flags=2)
                 img3 = cv2.drawMatches(target_img, kp1, screen_img, kp2, good, None, **draw_params)  # 生成cv2格式图片
                 img3 = cv2.cvtColor(img3, cv2.COLOR_BGR2RGB)  # 转RGB
-                ImgProcess.show_img(img3)  # 测试显示
+                ImageUtils.show_img(img3)  # 测试显示
 
             # 计算中心坐标
             h, w = target_hw
@@ -188,6 +189,6 @@ if __name__ == '__main__':
     # ImgProcess.show_img(temp)
     cap = cv2.cvtColor(cap, cv2.COLOR_BGR2GRAY)
 
-    cap1 = ImgProcess.get_sift(cap)
-    temp1 = ImgProcess.get_sift(temp)
+    cap1 = ImageUtils.get_sift(cap)
+    temp1 = ImageUtils.get_sift(temp)
     print(GetPosBySiftMatch.sift_matching(temp1, cap1, (img_src_height, img_src_width), temp, cap, True))
