@@ -105,8 +105,19 @@ def main(intervalSelectWindow, processName, windowWidth, windowHeight,
 
 if __name__ == "__main__":
     # main(3, "egp", 800, 700, False, True, 800, matchingMethod=1, compressionRatio=1)
+
     deviceStatus, deviceIds = HandleUtils.adb_device_status()
     if deviceStatus:
         selectedDevice = 0
         screen = ScreenCaptureUtils.adb_screen(deviceIds[selectedDevice])
-        ImageUtils.show_img(screen)
+    #     ImageUtils.show_img(screen)
+        # adb shell input swipe x y sleepTime toX toY
+        x = 100
+        y = 100
+        sleepTime = 1000
+        toX = 300
+        toY = 300
+        device_id = deviceIds[selectedDevice]
+        command = rf'.\utils\adb.exe -s {device_id} shell input swipe {x} {y} {sleepTime} {toX} {toY}'
+        HandleUtils.deal_cmd(command)
+        print(f"<br>点击设备 [ {device_id} ] 坐标: [ {toX} , {toY} ]")

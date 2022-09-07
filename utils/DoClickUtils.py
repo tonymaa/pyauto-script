@@ -15,6 +15,7 @@ class DoClickUtils:
         with open(".\\process\\egp\\finishEvent.py", mode="r", encoding="utf-8") as r:
             exec(r.read())
 
+
     @staticmethod
     def doWindowsClick(handleNum, process, matchingPosition):
         if process is None: return False
@@ -47,6 +48,7 @@ class DoClickUtils:
             x += round(random.random() * process["randomRightOffset"])
             y += round(random.random() * process["randomBottomOffset"])
             print(f"【debug】 x, y move to ({x}, {y})")
+
             # 鼠标按下
             position = MAKELONG(x, y)
             SendMessage(handleNum, WM_ACTIVATE, WA_ACTIVE, 0)
@@ -123,6 +125,8 @@ class DoClickUtils:
                 y = matchingPosition[1]
             x += round(random.random() * process["randomRightOffset"])
             y += round(random.random() * process["randomBottomOffset"])
+
+
             now_pos = position() # 记录当前鼠标位置
             # 鼠标移至目标
             moveTo(x, y)
@@ -170,36 +174,74 @@ class DoClickUtils:
     @staticmethod
     def adb_click(device_id):
         """数据线连手机点击"""
-        if self.pos is not None:
-            pos = self.pos
-            click_deviation = int(self.click_deviation)
-            px = random.randint(-click_deviation - 5, click_deviation + 5)  # 设置随机偏移范围，避免封号
-            py = random.randint(-click_deviation - 5, click_deviation + 5)
-            cx = int(px + pos[0])
-            cy = int(py + pos[1])
-            # 使用modules下的adb工具执行adb命令
-            command = abspath(dirname(__file__)) + rf'\adb.exe -s {device_id} shell input tap {cx} {cy}'
-            HandleSet.deal_cmd(command)
-            # system(command)
-            print(f"<br>点击设备 [ {device_id} ] 坐标: [ {cx} , {cy} ]")
+        if process is None: return False
 
-            if other_setting[10]:  # 如果配置文件设置了额外随机点击
-                roll_num = random.randint(0, 99)
-                if roll_num < 10:
-                    mx = random.randint(-50, 300) + cx
-                    my = random.randint(-50, 300) + cy
-                    sleep((random.randint(5, 15)) / 100)
-                    command = abspath(dirname(__file__)) + rf'\adb.exe -s {device_id} shell input tap {mx} {my}'
-                    HandleSet.deal_cmd(command)
-                    print(f"<br>点击设备 [ {device_id} ] 坐标: [ {mx} , {my} ]")
-                elif 47 < roll_num < 50 or roll_num > 97:
-                    mx = random.randint(200, 1000)
-                    my = random.randint(200, 1000)
-                    sleep((random.randint(5, 15)) / 100)
-                    command = abspath(dirname(__file__)) + rf'\adb.exe -s {device_id} shell input tap {mx} {my}'
-                    HandleSet.deal_cmd(command)
-                    print(f"<br>点击设备 [ {device_id} ] 坐标: [ {mx} , {my} ]")
+        # load事件调用
+        print(f"【debug】 invoke function matchEvent")
+        try:
+            if process["matchEvent"] != None and process["matchEvent"] != "":
+                DoClickUtils.doInvoke(process["matchEvent"])
+        except Exception: pass
 
-            return True
+        # 延时
+        sleepTime = (process["delayTime"] / 1000) + (random.random() * process["randomDelayTime"] / 1000)
+        print(f"【debug】 sleep {sleepTime} second")
+        time.sleep(sleepTime) # sleep
+
+        loopTimes = process["loopLeastCount"] + round(random.random() * process["loopRandomCount"])
+        for i in range(loopTimes):
+            # 一次点击
+            # 鼠标移动到指定位置
+            x = 0
+            y = 0
+            if process["useMatchingPosition"] == 1:
+                x = process["relativeClickPosition"][0]
+                y = process["relativeClickPosition"][1]
+            else:
+                x = matchingPosition[0]
+                y = matchingPosition[1]
+
+            x += round(random.random() * process["randomRightOffset"])
+            y += round(random.random() * process["randomBottomOffset"])
+
+            # 延时
+            sleepTime = process["delayUpTime"] + (random.random() * process["delayRandomUpTime"])
+
+            # 微小偏移
+            toX = x + random.random() * process["randomOffsetWhenUp"]
+            toX -= random.random() * process["randomOffsetWhenUp"]
+            toY = y + random.random() * process["randomOffsetWhenUp"]
+            toY -= random.random() * process["randomOffsetWhenUp"]
+            toX = round(toX)
+            toY = round(toY)
+
+            # adb shell input swipe x y sleepTime toX toY
+            command = rf'.\utils\adb.exe -s {device_id} shell input swipe {x} {y} {sleepTime} {toX} {toY}'
+            HandleUtils.deal_cmd(command)
+            print(f"<br>点击设备 [ {device_id} ] 坐标: [ {toX} , {toY} ]")
+
+            # 点击一次后的延时
+            sleepTime = (process["loopDelayLeastTime"] / 1000) + (random.random() * process["loopDelayRandomTime"] / 1000)
+            print(f"【debug】 sleep {sleepTime} second")
+            time.sleep(sleepTime)
+
+        # 结束延时
+        sleepTime = (process["endDelayLeastTime"] / 1000) + (random.random() * process["endDelayRandomTime"] / 1000)
+        print(f"【debug】 sleep {sleepTime} second")
+        time.sleep(sleepTime)
+
+        # 结束事件调用
+        print(f"【debug】 invoke function finishEvent")
+        try:
+            if process["finishEvent"] != None and process["finishEvent"] != "":
+                DoClickUtils.doInvoke(process["finishEvent"])
+        except Exception: pass
+        # if self.pos is not None:
+        #     # 使用modules下的adb工具执行adb命令
+        #     command = abspath(dirname(__file__)) + rf'\adb.exe -s {device_id} shell input tap {cx} {cy}'
+        #     HandleSet.deal_cmd(command)
+        #     # system(command)
+        #     print(f"<br>点击设备 [ {device_id} ] 坐标: [ {cx} , {cy} ]")
+        #     return True
 
 
