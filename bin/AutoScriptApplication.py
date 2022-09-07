@@ -25,56 +25,64 @@ import win32gui
     windowName: 可选参数，指定窗口的名字，找不到则选择窗口
     customDir: 所有图片模板的工作路径
     compressionRatio: 截图压缩率，(0, 1] 浮点类型
+    debugMode: debug 
 """
 def main(intervalSelectWindow, processName, windowWidth, windowHeight,
          isBackgroungRunning, isKeepActive, intervalScreenShot,
-         matchingMethod = 1, windowName = None, customDir=".\\process", compressionRatio = 0.5):
+         matchingMethod = 1, windowName = None, customDir=".\\process",
+         compressionRatio = 0.5, allowAbs = False, debugMode = False):
     # 1. 点击目标窗口/输入目标窗口 获取窗口句柄
-    # windows
     hwnd = None
-    if windowName is not None:
-        hwnd = HandleUtils.find_windows_by_title(windowName)
-    if hwnd is None:
-        hwnd = HandleUtils.get_active_window(intervalSelectWindow) # ('Service Development Studio - Google Chrome', 67596)
-    
-    # Android phone
-    # print(HandleSet.adb_device_status()) # (True, ['258905d3'])
-    # 窗口左上，右下坐标
-    # print(GetWindowRect(67596)) # (46, 24, 1234, 1019) left, top, right, bottom
+    if allowAbs: # phone
+        hwnd = HandleUtils.adb_device_status()
+    else:  # windows
+        if windowName is not None:
+            hwnd = HandleUtils.find_windows_by_title(windowName)
+        if hwnd is None:
+            hwnd = HandleUtils.get_active_window(intervalSelectWindow) # ('Service Development Studio - Google Chrome', 67596)
 
     # 2. 将目标窗口resize成固定大小，如： height: 300, width: 500
-    win32gui.MoveWindow(hwnd[1],0,0,windowWidth,windowHeight,True)
+    if not allowAbs: # windows, resize
+        win32gui.MoveWindow(hwnd[1],0,0,windowWidth,windowHeight,True)
 
     # 4. 当匹配上模板文件夹（放置在指定目录下）中的其中一个时，读取该模板图片的文件名，
     # 5. 解析一些信息
     processesInfo = ProcessesInfoUtils.get(processName, customDir)
-    # print(processesInfo)
     # 6. 循环截图目标窗口，将截图与模板图片进行匹配（模板图片是截图中的一小部分，预处理时需保证分辨率一致）
     while True:
         time.sleep(intervalScreenShot / 1000)
         # capture screen
         screen = None
-        # 是否后台运行
-        if isBackgroungRunning:
-            screen = ScreenCaptureUtils.window_screen(hwnd[1]) # 后台截图
-        else:
-            screen = ScreenCaptureUtils.front_window_screen(hwnd[1], isKeepActive) # 前台截图
+        if allowAbs: # phone
+            status, deviceIds = hwnd
+            if not status:
+                print(f"【error】 no device connected! try again...")
+                break
+            screen = ScreenCaptureUtils.adb_screen(deviceIds[0])
+        else: # windows
+            # 是否后台运行
+            if isBackgroungRunning:
+                screen = ScreenCaptureUtils.window_screen(hwnd[1]) # 后台截图
+            else:
+                screen = ScreenCaptureUtils.front_window_screen(hwnd[1], isKeepActive) # 前台截图
         screenSift = None
         # 采用sift算法
         if matchingMethod == 2:
-            screenSift = ImageUtils.get_sift(screen)
-        # 截图压缩
+            screenSift = ImageUtils.get_sift(screen) # 获取特征点
+
+        # 记录原始截图尺寸
         originalScreenWidth = screen.shape[1]
         originalScreenHeight = screen.shape[0]
+        # 截图压缩
         if compressionRatio != 1:
             screen = ImageUtils.img_compress(screen, compressionRatio)
-
-        # ImageUtils.show_img(screen)
+        if debugMode: ImageUtils.show_img_and_title(screen, "压缩后截图")
         # ImageUtils.save_img(screen)
         # capture phone screen
         # GetScreenCapture.adb_screen("258905d3")
         # compare template
         for process in processesInfo:
+            if debugMode: print(processesInfo)
             matchingPosition = None
             try:
                 # 模板匹配
@@ -88,7 +96,7 @@ def main(intervalSelectWindow, processName, windowWidth, windowHeight,
                         continue
                 # 特征点查找
                 elif matchingMethod == 2:
-                    matchingPosition = GetPosBySiftMatch.sift_matching(process.get("sift"), screenSift, (screen[0], screen[1]), process.get("image"), screen, True)
+                    matchingPosition = GetPosBySiftMatch.sift_matching(process.get("sift"), screenSift, (process.get("shape")[1], process.get("shape")[0]), process.get("image"), screen, debugMode)
                     if matchingPosition is None:
                         continue
             except Exception:
@@ -98,26 +106,20 @@ def main(intervalSelectWindow, processName, windowWidth, windowHeight,
                 break
             print(f"【debug】 matching position: ({matchingPosition[0]}, {matchingPosition[1]})")
             # 7. do click
-            if isBackgroungRunning:
-                DoClickUtils.doWindowsClick(hwnd[1], process, matchingPosition)
+            if allowAbs:
+                status, deviceIds = hwnd
+                if not status:
+                    print(f"【error】 no device connected! try again...")
+                    break
+                DoClickUtils.adb_click(deviceIds[0], process, matchingPosition)
             else:
-                DoClickUtils.doFrontWindowsClick(hwnd[1], process, matchingPosition, isKeepActive)
+                if isBackgroungRunning:
+                    DoClickUtils.doWindowsClick(hwnd[1], process, matchingPosition)
+                else:
+                    DoClickUtils.doFrontWindowsClick(hwnd[1], process, matchingPosition, isKeepActive)
+
 
 if __name__ == "__main__":
-    # main(3, "egp", 800, 700, False, True, 800, matchingMethod=1, compressionRatio=1)
-
-    deviceStatus, deviceIds = HandleUtils.adb_device_status()
-    if deviceStatus:
-        selectedDevice = 0
-        screen = ScreenCaptureUtils.adb_screen(deviceIds[selectedDevice])
-    #     ImageUtils.show_img(screen)
-        # adb shell input swipe x y sleepTime toX toY
-        x = 100
-        y = 100
-        sleepTime = 1000
-        toX = 300
-        toY = 300
-        device_id = deviceIds[selectedDevice]
-        command = rf'.\utils\adb.exe -s {device_id} shell input swipe {x} {y} {sleepTime} {toX} {toY}'
-        HandleUtils.deal_cmd(command)
-        print(f"<br>点击设备 [ {device_id} ] 坐标: [ {toX} , {toY} ]")
+    main(intervalSelectWindow=3, processName="egp", windowWidth=800, windowHeight=700,
+         isBackgroungRunning=True, isKeepActive=False, intervalScreenShot=800, matchingMethod=2,
+         compressionRatio=1, allowAbs=True, debugMode=False)

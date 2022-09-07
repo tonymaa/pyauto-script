@@ -33,6 +33,17 @@ class ImageUtils:
             cv2.destroyAllWindows()
 
     @staticmethod
+    def show_img_and_title(img, title):
+        """查看内存中cv2格式的图片"""
+        if img is None:
+            print("<br>未获取到需要显示的图片！")
+        else:
+            cv2.namedWindow(title)  # 命名窗口
+            cv2.imshow(title, img)  # 显示
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
+
+    @staticmethod
     def draw_pos_in_img(img, pos, height_width):
         """
         在图片中指定坐标点绘制边框

@@ -157,11 +157,13 @@ class GetPosBySiftMatch:
                                    flags=2)
                 img3 = cv2.drawMatches(target_img, kp1, screen_img, kp2, good, None, **draw_params)  # 生成cv2格式图片
                 img3 = cv2.cvtColor(img3, cv2.COLOR_BGR2RGB)  # 转RGB
-                ImageUtils.show_img(img3)  # 测试显示
+                ImageUtils.show_img_and_title(img3, "特征点匹配")  # 测试显示
 
             # 计算中心坐标
             h, w = target_hw
-            pts = float32([[0, 0], [0, h - 1], [w - 1, h - 1], [w - 1, 0]]).reshape(-1, 1, 2)
+            print(target_hw)
+            pts = float32([[0, 0], [0, h - 1], [w - 1, h - 1], [w - 1, 0]])
+            pts =  pts.reshape(-1, 1, 2)
             if m is not None:
                 dst = cv2.perspectiveTransform(pts, m)
                 arr = int32(dst)
