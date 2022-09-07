@@ -94,14 +94,15 @@ def adbClickOnce(x, y, process, device_id, i):
     i: 循环变量，打印日志用的
     isKeepActive: 保持窗口active状态，当mode为2是启用
 """
-def distributeClick(mode, process, matchingPosition, handleNum, isKeepActive):
+def distributeClick(mode, process, matchingPosition, handleNum, isKeepActive, eventAttribute):
     if process is None: return False
-
+    eventAttribute.setCurProcess(process)
+    eventAttribute.setCurMatchingPosition(matchingPosition)
     # load事件调用
     print(f"【debug】 invoke function matchEvent")
     try:
         if process["matchEvent"] != None and process["matchEvent"] != "":
-            DoClickUtils.doInvoke(process["matchEvent"])
+            DoClickUtils.doInvoke(process["matchEvent"], eventAttribute)
     except Exception:
         pass
 
@@ -148,7 +149,7 @@ def distributeClick(mode, process, matchingPosition, handleNum, isKeepActive):
     print(f"【debug】 invoke function finishEvent")
     try:
         if process["finishEvent"] != None and process["finishEvent"] != "":
-            DoClickUtils.doInvoke(process["finishEvent"])
+            DoClickUtils.doInvoke(process["finishEvent"], eventAttribute)
     except Exception:
         pass
 
@@ -156,22 +157,21 @@ def distributeClick(mode, process, matchingPosition, handleNum, isKeepActive):
 class DoClickUtils:
     def __init__(self): pass
 
-    def doInvoke(invokePath):
-        with open(".\\process\\egp\\finishEvent.py", mode="r", encoding="utf-8") as r:
-            exec(r.read())
-
-
-    @staticmethod
-    def doWindowsClick(handleNum, process, matchingPosition):
-        distributeClick(1, process, matchingPosition, handleNum, None)
+    def doInvoke(invokePath, eventAttribute):
+        with open(invokePath, mode="r", encoding="utf-8") as r:
+            exec(r.read(), {"eventAttribute": eventAttribute})
 
     @staticmethod
-    def doFrontWindowsClick(handleNum, process, matchingPosition, isKeepActive):
-        distributeClick(2, process, matchingPosition, handleNum, isKeepActive)
+    def doWindowsClick(handleNum, process, matchingPosition, eventAttribute):
+        distributeClick(1, process, matchingPosition, handleNum, None, eventAttribute)
 
     @staticmethod
-    def adb_click(device_id, process, matchingPosition):
-        distributeClick(3, process, matchingPosition, device_id, None)
+    def doFrontWindowsClick(handleNum, process, matchingPosition, isKeepActive, eventAttribute):
+        distributeClick(2, process, matchingPosition, handleNum, isKeepActive, eventAttribute)
+
+    @staticmethod
+    def adb_click(device_id, process, matchingPosition, eventAttribute):
+        distributeClick(3, process, matchingPosition, device_id, None, eventAttribute)
 
 
 

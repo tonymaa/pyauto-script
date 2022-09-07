@@ -10,9 +10,7 @@ from utils.ProcessesInfoUtils import ProcessesInfoUtils
 from utils.ScreenCaptureUtils import ScreenCaptureUtils
 from utils.HandleUtils import HandleUtils
 import win32gui
-
-
-
+from model.EventAttribute import EventAttribute
 """
     intervalSelectWindow: 几秒时间去选择窗口，并定位到此窗口
     processName: 循环遍历该文件夹下的图片模板
@@ -25,12 +23,17 @@ import win32gui
     windowName: 可选参数，指定窗口的名字，找不到则选择窗口
     customDir: 所有图片模板的工作路径
     compressionRatio: 截图压缩率，(0, 1] 浮点类型
+    selectedDeviceIndex: adb连接的所有设备，默认选取第一个
     debugMode: debug 
 """
 def main(intervalSelectWindow, processName, windowWidth, windowHeight,
          isBackgroungRunning, isKeepActive, intervalScreenShot,
          matchingMethod = 1, windowName = None, customDir=".\\process",
-         compressionRatio = 0.5, allowAbs = False, debugMode = False):
+         compressionRatio = 0.5, allowAbs = False, selectedDeviceIndex = 0, debugMode = False):
+    # 提供一个给匹配事件的自定义函数的作用域，存放一些变量
+    eventAttribute = EventAttribute()
+    eventAttribute.allowAbs = allowAbs
+    eventAttribute.selectedDeviceIndex = selectedDeviceIndex
     # 1. 点击目标窗口/输入目标窗口 获取窗口句柄
     hwnd = None
     if allowAbs: # phone
@@ -40,25 +43,26 @@ def main(intervalSelectWindow, processName, windowWidth, windowHeight,
             hwnd = HandleUtils.find_windows_by_title(windowName)
         if hwnd is None:
             hwnd = HandleUtils.get_active_window(intervalSelectWindow) # ('Service Development Studio - Google Chrome', 67596)
-
+    eventAttribute.setHwnd(hwnd)
     # 2. 将目标窗口resize成固定大小，如： height: 300, width: 500
     if not allowAbs: # windows, resize
         win32gui.MoveWindow(hwnd[1],0,0,windowWidth,windowHeight,True)
 
-    # 4. 当匹配上模板文件夹（放置在指定目录下）中的其中一个时，读取该模板图片的文件名，
-    # 5. 解析一些信息
+    # 3. 当匹配上模板文件夹（放置在指定目录下）中的其中一个时，读取该模板图片的文件名，
+    # 4. 解析一些信息
     processesInfo = ProcessesInfoUtils.get(processName, customDir)
-    # 6. 循环截图目标窗口，将截图与模板图片进行匹配（模板图片是截图中的一小部分，预处理时需保证分辨率一致）
-    while True:
+    # 5. 循环截图目标窗口，将截图与模板图片进行匹配（模板图片是截图中的一小部分，预处理时需保证分辨率一致）
+    while eventAttribute.getProcessRunning():
         time.sleep(intervalScreenShot / 1000)
         # capture screen
         screen = None
+        # 5.1 截图
         if allowAbs: # phone
             status, deviceIds = hwnd
             if not status:
                 print(f"【error】 no device connected! try again...")
                 break
-            screen = ScreenCaptureUtils.adb_screen(deviceIds[0])
+            screen = ScreenCaptureUtils.adb_screen(deviceIds[selectedDeviceIndex])
         else: # windows
             # 是否后台运行
             if isBackgroungRunning:
@@ -69,21 +73,20 @@ def main(intervalSelectWindow, processName, windowWidth, windowHeight,
         # 采用sift算法
         if matchingMethod == 2:
             screenSift = ImageUtils.get_sift(screen) # 获取特征点
-
         # 记录原始截图尺寸
         originalScreenWidth = screen.shape[1]
         originalScreenHeight = screen.shape[0]
-        # 截图压缩
+        # 5.2 截图压缩
         if compressionRatio != 1:
             screen = ImageUtils.img_compress(screen, compressionRatio)
         if debugMode: ImageUtils.show_img_and_title(screen, "压缩后截图")
-        # ImageUtils.save_img(screen)
-        # capture phone screen
-        # GetScreenCapture.adb_screen("258905d3")
-        # compare template
+
+        # 5.3 匹配processesInfo里所有图片
         for process in processesInfo:
+            if not eventAttribute.getProcessRunning(): return # 结束
             if debugMode: print(processesInfo)
             matchingPosition = None
+            # 5.3.1 匹配
             try:
                 # 模板匹配
                 if matchingMethod == 1:
@@ -105,21 +108,22 @@ def main(intervalSelectWindow, processName, windowWidth, windowHeight,
                 print(f"【error】 matching error... try again")
                 break
             print(f"【debug】 matching position: ({matchingPosition[0]}, {matchingPosition[1]})")
-            # 7. do click
+
+            # 5.3.2 点击
             if allowAbs:
                 status, deviceIds = hwnd
                 if not status:
                     print(f"【error】 no device connected! try again...")
                     break
-                DoClickUtils.adb_click(deviceIds[0], process, matchingPosition)
+                DoClickUtils.adb_click(deviceIds[selectedDeviceIndex], process, matchingPosition, eventAttribute)
             else:
                 if isBackgroungRunning:
-                    DoClickUtils.doWindowsClick(hwnd[1], process, matchingPosition)
+                    DoClickUtils.doWindowsClick(hwnd[1], process, matchingPosition, eventAttribute)
                 else:
-                    DoClickUtils.doFrontWindowsClick(hwnd[1], process, matchingPosition, isKeepActive)
+                    DoClickUtils.doFrontWindowsClick(hwnd[1], process, matchingPosition, isKeepActive, eventAttribute)
 
 
 if __name__ == "__main__":
     main(intervalSelectWindow=3, processName="egp", windowWidth=800, windowHeight=700,
          isBackgroungRunning=True, isKeepActive=False, intervalScreenShot=800, matchingMethod=2,
-         compressionRatio=1, allowAbs=True, debugMode=False)
+         compressionRatio=1, allowAbs=False, selectedDeviceIndex=0, debugMode=False)
