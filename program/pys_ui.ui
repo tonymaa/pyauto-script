@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>826</width>
-    <height>523</height>
+    <width>763</width>
+    <height>496</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -23,33 +23,10 @@
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="12" column="2">
-       <widget class="QRadioButton" name="radioButton_8">
+      <item row="11" column="0">
+       <widget class="QLabel" name="label_10">
         <property name="text">
-         <string>否</string>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="1">
-       <widget class="QComboBox" name="comboBox_2"/>
-      </item>
-      <item row="17" column="2">
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="15" column="1" colspan="2">
-       <widget class="QSlider" name="horizontalSlider">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <string>运行模式：</string>
         </property>
        </widget>
       </item>
@@ -60,82 +37,41 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>窗口拉伸尺寸：</string>
-        </property>
-       </widget>
-      </item>
-      <item row="12" column="0">
-       <widget class="QLabel" name="label_13">
-        <property name="text">
-         <string>处于前台运行时，是否置顶窗口：</string>
-        </property>
-       </widget>
-      </item>
-      <item row="13" column="2">
-       <widget class="QRadioButton" name="radioButton_6">
-        <property name="text">
-         <string>特征点匹配</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>选择设备：</string>
-        </property>
-       </widget>
-      </item>
-      <item row="17" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item row="3" column="1">
+       <widget class="QComboBox" name="select_device_id">
         <item>
-         <widget class="QPushButton" name="pushButton_3">
-          <property name="text">
-           <string>运行脚本</string>
-          </property>
-         </widget>
+         <property name="text">
+          <string/>
+         </property>
         </item>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
-         <widget class="QPushButton" name="pushButton_4">
+         <widget class="QLabel" name="inputWindowTitle">
           <property name="text">
-           <string>停止运行</string>
+           <string/>
           </property>
          </widget>
         </item>
        </layout>
       </item>
-      <item row="13" column="0">
-       <widget class="QLabel" name="label_11">
-        <property name="text">
-         <string>匹配方法：</string>
-        </property>
-       </widget>
+      <item row="8" column="1">
+       <widget class="QComboBox" name="select_mode"/>
       </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>选择手机编号：</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0">
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="text">
-         <string>选择工作路径（默认process文件夹）</string>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="0">
-       <widget class="QLineEdit" name="lineEdit_3">
-        <property name="text">
-         <string>选择模式：</string>
+      <item row="2" column="2" rowspan="16" colspan="2">
+       <widget class="QTextBrowser" name="runningLog">
+        <property name="minimumSize">
+         <size>
+          <width>280</width>
+          <height>0</height>
+         </size>
         </property>
        </widget>
       </item>
       <item row="16" column="1">
-       <widget class="QComboBox" name="comboBox_3">
+       <widget class="QComboBox" name="select_when_ending">
         <item>
          <property name="text">
           <string>不执行操作</string>
@@ -158,54 +94,10 @@
         </item>
        </widget>
       </item>
-      <item row="6" column="0">
-       <widget class="QPushButton" name="pushButton">
-        <property name="text">
-         <string>选择windows窗口</string>
-        </property>
-       </widget>
-      </item>
       <item row="15" column="0">
        <widget class="QLabel" name="label_12">
         <property name="text">
          <string>压缩截图：</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="3" rowspan="16">
-       <widget class="QTextBrowser" name="textBrowser"/>
-      </item>
-      <item row="13" column="1">
-       <widget class="QRadioButton" name="radioButton_5">
-        <property name="text">
-         <string>模板匹配</string>
-        </property>
-       </widget>
-      </item>
-      <item row="16" column="0">
-       <widget class="QLabel" name="label_14">
-        <property name="text">
-         <string>运行结束后：</string>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="1">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="7" column="1" colspan="2">
-       <widget class="QLabel" name="label_7">
-        <property name="text">
-         <string>D:/hello/process</string>
         </property>
        </widget>
       </item>
@@ -222,58 +114,196 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit"/>
+         <widget class="QLineEdit" name="windowWidthInput">
+          <property name="text">
+           <string>800</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>高：</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="windowHeightInput">
+          <property name="text">
+           <string>600</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
-      <item row="2" column="2">
-       <widget class="QRadioButton" name="radioButton_2">
+      <item row="9" column="1">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="16" column="0">
+       <widget class="QLabel" name="label_14">
         <property name="text">
-         <string>Android手机</string>
+         <string>运行结束后：</string>
         </property>
        </widget>
       </item>
-      <item row="11" column="1">
-       <widget class="QRadioButton" name="radioButton_3">
+      <item row="12" column="0">
+       <widget class="QLabel" name="label_13">
         <property name="text">
-         <string>前台运行</string>
+         <string>处于前台运行时，是否置顶窗口：</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QRadioButton" name="radioButton">
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_15">
         <property name="text">
-         <string>windows窗口</string>
+         <string>运行日志：</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QComboBox" name="comboBox">
-        <item>
-         <property name="text">
-          <string/>
-         </property>
-        </item>
+      <item row="14" column="1">
+       <widget class="QLineEdit" name="screenshotsInterval">
+        <property name="text">
+         <string>500</string>
+        </property>
        </widget>
       </item>
-      <item row="11" column="2">
-       <widget class="QRadioButton" name="radioButton_4">
+      <item row="7" column="1">
+       <widget class="QLabel" name="showWorkingDir">
         <property name="text">
-         <string>后台运行（兼容一些窗口）</string>
+         <string>./process</string>
         </property>
        </widget>
       </item>
       <item row="12" column="1">
-       <widget class="QRadioButton" name="radioButton_7">
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <item>
+         <widget class="QRadioButton" name="radioActiveYes">
+          <property name="text">
+           <string>是</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radioActiveNo">
+          <property name="text">
+           <string>否</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label">
         <property name="text">
-         <string>是</string>
+         <string>选择设备：</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="3">
-       <widget class="QLabel" name="label_15">
+      <item row="8" column="0">
+       <widget class="QLabel" name="label_17">
         <property name="text">
-         <string>运行日志：</string>
+         <string>选择模式：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="17" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QPushButton" name="butRun">
+          <property name="text">
+           <string>运行脚本</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="butStop">
+          <property name="text">
+           <string>停止运行</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="13" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <item>
+         <widget class="QRadioButton" name="radioTemplateMatch">
+          <property name="text">
+           <string>模板匹配</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radioSiftMatch">
+          <property name="text">
+           <string>特征点匹配</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="11" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="QRadioButton" name="radioRunFront">
+          <property name="text">
+           <string>前台运行</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="raidoRunBack">
+          <property name="text">
+           <string>后台运行（兼容一些窗口）</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="14" column="0">
+       <widget class="QLabel" name="label_16">
+        <property name="text">
+         <string>每隔多少毫秒截一次屏：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="13" column="0">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>匹配方法：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="15" column="1">
+       <widget class="QSlider" name="compressScreentshots">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>选择手机编号：</string>
         </property>
        </widget>
       </item>
@@ -284,48 +314,61 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="2">
+      <item row="6" column="0">
+       <widget class="QPushButton" name="selectWindow">
+        <property name="text">
+         <string>选择windows窗口</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>窗口拉伸尺寸：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QPushButton" name="selectWorkingDir">
+        <property name="text">
+         <string>选择工作路径（默认process文件夹）</string>
+        </property>
+       </widget>
+      </item>
+      <item row="17" column="1">
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="1">
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <widget class="QLabel" name="label_5">
+         <widget class="QRadioButton" name="radioWindows">
           <property name="text">
-           <string>高：</string>
+           <string>windows窗口</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_2"/>
-        </item>
-       </layout>
-      </item>
-      <item row="11" column="0">
-       <widget class="QLabel" name="label_10">
-        <property name="text">
-         <string>运行模式：</string>
-        </property>
-       </widget>
-      </item>
-      <item row="14" column="0">
-       <widget class="QLabel" name="label_16">
-        <property name="text">
-         <string>每隔多少毫秒截一次屏：</string>
-        </property>
-       </widget>
-      </item>
-      <item row="14" column="1">
-       <widget class="QLineEdit" name="lineEdit_5"/>
-      </item>
-      <item row="6" column="1" colspan="2">
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
-        <item>
-         <widget class="QLabel" name="label_6">
+         <widget class="QRadioButton" name="radioABD">
           <property name="text">
-           <string>或 输入窗口标题：</string>
+           <string>Android手机</string>
           </property>
          </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_4"/>
         </item>
        </layout>
       </item>
@@ -341,7 +384,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>826</width>
+     <width>763</width>
      <height>23</height>
     </rect>
    </property>
