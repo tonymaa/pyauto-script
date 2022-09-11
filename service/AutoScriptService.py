@@ -154,6 +154,7 @@ class AutoScriptService:
         # 提供一个给匹配事件的自定义函数的作用域，存放一些变量
         eventAttribute = EventAttribute()
         self.eventAttribute = eventAttribute
+        eventAttribute.runningLog = runningLog
         eventAttribute.allowAbs = allowAbs
         eventAttribute.selectedDeviceIndex = selectedDeviceIndex
         eventAttribute.setHwnd(hwnd)
@@ -175,6 +176,7 @@ class AutoScriptService:
                     print(f"【error】 no device connected! try again...")
                     if runningLog is not None:
                         runningLog.append("无设备连接，请重试!")
+                        runningLog.moveCursor(runningLog.textCursor().End)
                     break
                 screen = ScreenCaptureUtils.adb_screen(deviceIds[selectedDeviceIndex])
             else: # windows
@@ -198,6 +200,7 @@ class AutoScriptService:
 
             if runningLog is not None:
                 runningLog.append("截图成功，匹配中...")
+                runningLog.moveCursor(runningLog.textCursor().End)
 
             # 5.3 匹配processesInfo里所有图片
             for process in processesInfo:
@@ -217,15 +220,15 @@ class AutoScriptService:
                             template = ImageUtils.img_compress(template, compressionRatio)
                         matchingPosition = PositionUtils.template_matching(screen, template, originalScreenWidth, originalScreenHeight, process.get("threshold"))
                         if matchingPosition is None:
-                            if runningLog is not None:
-                                runningLog.append("模板匹配失败...")
+                            # if runningLog is not None:
+                            #     runningLog.append("模板匹配失败...")
                             continue
                     # 特征点查找
                     elif matchingMethod == 2:
                         matchingPosition = GetPosBySiftMatch.sift_matching(process.get("sift"), screenSift, (process.get("shape")[1], process.get("shape")[0]), process.get("image"), screen, debugMode)
                         if matchingPosition is None:
-                            if runningLog is not None:
-                                runningLog.append("特征匹配失败...")
+                            # if runningLog is not None:
+                            #     runningLog.append("特征匹配失败...")
                             print("特征匹配失败...")
                             continue
                 except Exception:
@@ -236,6 +239,7 @@ class AutoScriptService:
                 print(f"【debug】 matching position: ({matchingPosition[0]}, {matchingPosition[1]})")
                 if runningLog is not None:
                     runningLog.append(f"匹配成功，点击坐标：({matchingPosition[0]}, {matchingPosition[1]})")
+                    runningLog.moveCursor(runningLog.textCursor().End)
                 # 5.3.2 点击
                 if allowAbs:
                     status, deviceIds = hwnd
@@ -243,6 +247,7 @@ class AutoScriptService:
                         print(f"【error】 no device connected! try again...")
                         if runningLog is not None:
                             runningLog.append("无设备连接，请重试!")
+                            runningLog.moveCursor(runningLog.textCursor().End)
                         break
                     DoClickUtils.adb_click(deviceIds[selectedDeviceIndex], process, matchingPosition, eventAttribute)
                 else:
@@ -253,6 +258,7 @@ class AutoScriptService:
 
         if runningLog is not None:
             runningLog.append("脚本运行结束!")
+            runningLog.moveCursor(runningLog.textCursor().End)
 
 
 if __name__ == "__main__":

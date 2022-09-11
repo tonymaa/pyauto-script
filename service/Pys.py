@@ -76,6 +76,7 @@ class Pys(Ui_MainWindow):
         self.loadProcesses()
 
 
+
     def initEvent(self):
         self.radioWindows.toggled.connect(self.selectWindowsMode) # 切换设备
         self.selectWindow.clicked.connect(self.selectWindowsWindow)

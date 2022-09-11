@@ -7,6 +7,7 @@ class EventAttribute:
         self.attribute = {}
         self.hwnd = None
         self.selectedDeviceIndex = 0
+        self.runningLog = None
 
     def getWindowTitle(self):
         if self.hwnd is not None and not self.allowAbs: return self.hwnd[0]

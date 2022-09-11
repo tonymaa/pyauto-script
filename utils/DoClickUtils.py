@@ -12,6 +12,7 @@ from utils.HandleUtils import HandleUtils
 def windowsClickOnce(x, y, process, handleNum, i):
     # 鼠标按下
     position = MAKELONG(x, y)
+    # print(f">>>>>>>>>>>x{x},{y},{handleNum}")
     SendMessage(handleNum, WM_ACTIVATE, WA_ACTIVE, 0)
     SendMessage(handleNum, WM_LBUTTONDOWN, 0, position)  # 模拟鼠标按下
     print(f"【debug】 click down at ({x}, {y})")
