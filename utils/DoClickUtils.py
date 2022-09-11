@@ -3,7 +3,7 @@ import time
 import random
 import win32com.client
 from win32gui import SetForegroundWindow, GetWindowRect
-from win32api import MAKELONG, SendMessage
+from win32api import MAKELONG, SendMessage, PostMessage
 from win32con import WM_LBUTTONUP, WM_LBUTTONDOWN, WM_ACTIVATE, WA_ACTIVE
 from pyautogui import position, click, moveTo, mouseDown, mouseUp
 from utils.HandleUtils import HandleUtils
@@ -13,8 +13,8 @@ def windowsClickOnce(x, y, process, handleNum, i):
     # 鼠标按下
     position = MAKELONG(x, y)
     # print(f">>>>>>>>>>>x{x},{y},{handleNum}")
-    SendMessage(handleNum, WM_ACTIVATE, WA_ACTIVE, 0)
-    SendMessage(handleNum, WM_LBUTTONDOWN, 0, position)  # 模拟鼠标按下
+    PostMessage(handleNum, WM_ACTIVATE, WA_ACTIVE, 0)
+    PostMessage(handleNum, WM_LBUTTONDOWN, 0, position)  # 模拟鼠标按下
     print(f"【debug】 click down at ({x}, {y})")
     # 延时
     sleepTime = (process["delayUpTime"] / 1000) + (random.random() * process["delayRandomUpTime"] / 1000)
@@ -32,7 +32,7 @@ def windowsClickOnce(x, y, process, handleNum, i):
 
     # 鼠标抬起
     position = MAKELONG(x, y)
-    SendMessage(handleNum, WM_LBUTTONUP, 0, position)  # 模拟鼠标弹起
+    PostMessage(handleNum, WM_LBUTTONUP, 0, position)  # 模拟鼠标弹起
 
     print(f"<br>【第 {i + 1} 次】点击坐标: [ {x} , {y} ] <br>窗口名称: [ {HandleUtils.get_handle_title(handleNum)} ]")
 
@@ -42,6 +42,9 @@ def frontWindowsClickOnce(x, y, process, handleNum, i, isKeepActive):
         shell = win32com.client.Dispatch("WScript.Shell")
         shell.SendKeys('%')
         SetForegroundWindow(handleNum)
+    x1, y1, x2, y2 = GetWindowRect(handleNum)
+    x += x1
+    y += y1
     now_pos = position()  # 记录当前鼠标位置
     # 鼠标移至目标
     moveTo(x, y)
