@@ -26,7 +26,8 @@ from model.EventAttribute import EventAttribute
     debugMode: debug 
 """
 class AutoScriptService:
-    def __init__(self): pass
+    def __init__(self):
+        self.eventAttribute = None
     @staticmethod
     def startMatching(hwnd, intervalSelectWindow, processName, windowWidth, windowHeight,
              isBackgroungRunning, isKeepActive, intervalScreenShot,
@@ -126,13 +127,33 @@ class AutoScriptService:
                     else:
                         DoClickUtils.doFrontWindowsClick(hwnd[1], process, matchingPosition, isKeepActive, eventAttribute)
 
-    @staticmethod
-    def matching(hwnd, processName, windowWidth, windowHeight,
+
+    def matching(self, runningLog, hwnd, processName, windowWidth, windowHeight,
              isBackgroungRunning, isKeepActive, intervalScreenShot,
              matchingMethod = 1, windowName = None, customDir=".\\process",
-             compressionRatio = 0.5, allowAbs = False, selectedDeviceIndex = 0, debugMode = False):
+             compressionRatio = 0.5, allowAbs = False, selectedDeviceIndex = 0
+                 , debugMode = False):
+
+        print("----------------------------------------------")
+        print("running parameter: ")
+        print(f"runningLog: {runningLog}")
+        print(f"hwnd: {hwnd}")
+        print(f"curProcess: {processName}")
+        print(f"curWorkingDir: {customDir}")
+        print(f"windowWidth: {windowWidth}")
+        print(f"windowHeight: {windowHeight}")
+        print(f"isBackgroungRunning: {isBackgroungRunning}")
+        print(f"isKeepActive: {isKeepActive}")
+        print(f"screenshotsInterval: {intervalScreenShot}")
+        print(f"matchingMethod: {matchingMethod}")
+        print(f"compressionRatio: {compressionRatio}")
+        print(f"allowAbs: {allowAbs}")
+        print(f"selectedDeviceIndex: {selectedDeviceIndex}")
+        print("----------------------------------------------")
+
         # 提供一个给匹配事件的自定义函数的作用域，存放一些变量
         eventAttribute = EventAttribute()
+        self.eventAttribute = eventAttribute
         eventAttribute.allowAbs = allowAbs
         eventAttribute.selectedDeviceIndex = selectedDeviceIndex
         eventAttribute.setHwnd(hwnd)
@@ -140,6 +161,8 @@ class AutoScriptService:
         # 3. 当匹配上模板文件夹（放置在指定目录下）中的其中一个时，读取该模板图片的文件名，
         # 4. 解析一些信息
         processesInfo = ProcessesInfoUtils.get(processName, customDir)
+        # print(f"Info parsed: {processesInfo}")
+
         # 5. 循环截图目标窗口，将截图与模板图片进行匹配（模板图片是截图中的一小部分，预处理时需保证分辨率一致）
         while eventAttribute.getProcessRunning():
             time.sleep(intervalScreenShot / 1000)
@@ -150,6 +173,8 @@ class AutoScriptService:
                 status, deviceIds = hwnd
                 if not status:
                     print(f"【error】 no device connected! try again...")
+                    if runningLog is not None:
+                        runningLog.append("无设备连接，请重试!")
                     break
                 screen = ScreenCaptureUtils.adb_screen(deviceIds[selectedDeviceIndex])
             else: # windows
@@ -162,6 +187,7 @@ class AutoScriptService:
             # 采用sift算法
             if matchingMethod == 2:
                 screenSift = ImageUtils.get_sift(screen) # 获取特征点
+            # print(screenSift)
             # 记录原始截图尺寸
             originalScreenWidth = screen.shape[1]
             originalScreenHeight = screen.shape[0]
@@ -170,9 +196,15 @@ class AutoScriptService:
                 screen = ImageUtils.img_compress(screen, compressionRatio)
             if debugMode: ImageUtils.show_img_and_title(screen, "压缩后截图")
 
+            if runningLog is not None:
+                runningLog.append("截图成功，匹配中...")
+
             # 5.3 匹配processesInfo里所有图片
             for process in processesInfo:
-                if not eventAttribute.getProcessRunning(): return # 结束
+                if not eventAttribute.getProcessRunning():
+                    if runningLog is not None:
+                        runningLog.append("脚本运行结束!")
+                    return # 结束
                 if debugMode: print(processesInfo)
                 matchingPosition = None
                 # 5.3.1 匹配
@@ -185,11 +217,16 @@ class AutoScriptService:
                             template = ImageUtils.img_compress(template, compressionRatio)
                         matchingPosition = PositionUtils.template_matching(screen, template, originalScreenWidth, originalScreenHeight, process.get("threshold"))
                         if matchingPosition is None:
+                            if runningLog is not None:
+                                runningLog.append("模板匹配失败...")
                             continue
                     # 特征点查找
                     elif matchingMethod == 2:
                         matchingPosition = GetPosBySiftMatch.sift_matching(process.get("sift"), screenSift, (process.get("shape")[1], process.get("shape")[0]), process.get("image"), screen, debugMode)
                         if matchingPosition is None:
+                            if runningLog is not None:
+                                runningLog.append("特征匹配失败...")
+                            print("特征匹配失败...")
                             continue
                 except Exception:
                     import traceback
@@ -197,12 +234,15 @@ class AutoScriptService:
                     print(f"【error】 matching error... try again")
                     break
                 print(f"【debug】 matching position: ({matchingPosition[0]}, {matchingPosition[1]})")
-
+                if runningLog is not None:
+                    runningLog.append(f"匹配成功，点击坐标：({matchingPosition[0]}, {matchingPosition[1]})")
                 # 5.3.2 点击
                 if allowAbs:
                     status, deviceIds = hwnd
                     if not status:
                         print(f"【error】 no device connected! try again...")
+                        if runningLog is not None:
+                            runningLog.append("无设备连接，请重试!")
                         break
                     DoClickUtils.adb_click(deviceIds[selectedDeviceIndex], process, matchingPosition, eventAttribute)
                 else:
@@ -210,6 +250,10 @@ class AutoScriptService:
                         DoClickUtils.doWindowsClick(hwnd[1], process, matchingPosition, eventAttribute)
                     else:
                         DoClickUtils.doFrontWindowsClick(hwnd[1], process, matchingPosition, isKeepActive, eventAttribute)
+
+        if runningLog is not None:
+            runningLog.append("脚本运行结束!")
+
 
 if __name__ == "__main__":
     AutoScriptService.startMatching(intervalSelectWindow=3, processName="egp", windowWidth=800, windowHeight=700,

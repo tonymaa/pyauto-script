@@ -16,7 +16,7 @@ import win32com
 from PIL import ImageGrab
 import numpy as np
 from service.AutoScriptService import AutoScriptService
-
+from service.RunAutoScriptServiceThread import RunAutoScriptServiceThread
 constant.WINDOWSMODE = 0
 constant.ABSMODE = 1
 
@@ -36,6 +36,7 @@ class Pys(Ui_MainWindow):
         self.windowHeight = 0
         self.phoneWidth = 0
         self.phoneHeight = 0
+        self.runThread = None
 
     def built(self, mainWindow):
         self.initMode(mainWindow)
@@ -72,12 +73,16 @@ class Pys(Ui_MainWindow):
         self.compressScreentshots.setSingleStep(1)
         self.compressScreentshots.setValue(100)
 
+        self.loadProcesses()
+
+
     def initEvent(self):
         self.radioWindows.toggled.connect(self.selectWindowsMode) # 切换设备
         self.selectWindow.clicked.connect(self.selectWindowsWindow)
         self.selectWorkingDir.clicked.connect(self.selectDir)
         self.select_mode.currentIndexChanged.connect(self.selectProcess)
         self.butRun.clicked.connect(self.runScript)
+        self.butStop.clicked.connect(self.stopScript)
     def closing(self):
         pass
 
@@ -142,7 +147,9 @@ class Pys(Ui_MainWindow):
         self.curWorkingDir = curWorkingDir
         print(f"【debug】 curWorkingDir: {self.curWorkingDir}")
         self.showWorkingDir.setText(self.curWorkingDir)
+        self.loadProcesses()
 
+    def loadProcesses(self):
         # 读取目录下所有文件
         self.select_mode.clear()
         files = os.listdir(self.curWorkingDir)
@@ -164,7 +171,19 @@ class Pys(Ui_MainWindow):
     def validateInput(self):
         pass
 
+    def stopScript(self):
+        if self.runThread is not None and self.runThread.autoScriptService is not None:
+            self.runThread.autoScriptService.eventAttribute.terminateProcess()
+            self.runningLog.setText("运行结束中...")
+            self.runThread = None
+
     def runScript(self):
+        if self.runThread is not None:
+            QtWidgets.QMessageBox.information(None, 'Info', f'请先停止脚本!')
+            return
+        if self.hwnd is None or not self.hwnd[0]:
+            QtWidgets.QMessageBox.information(None, 'warning', f'请选择窗口!')
+            return
         self.validateInput()
         isBackgroungRunning = self.raidoRunBack.isChecked()
         isKeepActive = self.radioActiveYes.isChecked()
@@ -172,20 +191,23 @@ class Pys(Ui_MainWindow):
         matchingMethod = 1 if self.radioTemplateMatch.isChecked() else 2
         compressionRatio = self.compressScreentshots.value() / 100
         allowAbs = self.curMode == constant.ABSMODE
-        # print(self.hwnd)
-        # print(self.curProcess)
-        # print(self.windowWidth)
-        # print(self.windowHeight)
-        # print(isBackgroungRunning)
-        # print(isKeepActive)
-        # print(screenshotsInterval)
-        # print(matchingMethod)
-        # print(compressionRatio)
-        # print(allowAbs)
-        # print(self.selectedDeviceIndex)
-        AutoScriptService.matching(hwnd=self.hwnd, processName=self.curProcess,
-                            windowWidth=self.windowWidth, windowHeight=self.windowHeight,
-                             isBackgroungRunning=isBackgroungRunning, isKeepActive=isKeepActive,
-                            intervalScreenShot=screenshotsInterval, matchingMethod=matchingMethod,
-                             compressionRatio=compressionRatio, allowAbs=allowAbs,
-                                   selectedDeviceIndex=self.selectedDeviceIndex, debugMode=False)
+
+
+
+        self.runThread = RunAutoScriptServiceThread(self.hwnd, self.curProcess, self.curWorkingDir,
+                            self.windowWidth, self.windowHeight,
+                             isBackgroungRunning, isKeepActive,
+                            screenshotsInterval, matchingMethod,
+                             compressionRatio, allowAbs,
+                                   self.selectedDeviceIndex, self.runningLog)
+        self.runThread.setDaemon(True)
+        self.runThread.start()
+        self.runningLog.setText("脚本运行中...")
+
+        # ass = AutoScriptService()
+        # ass.matching(hwnd=self.hwnd, processName=self.curProcess, customDir=self.curWorkingDir,
+        #                     windowWidth=self.windowWidth, windowHeight=self.windowHeight,
+        #                      isBackgroungRunning=isBackgroungRunning, isKeepActive=isKeepActive,
+        #                     intervalScreenShot=screenshotsInterval, matchingMethod=matchingMethod,
+        #                      compressionRatio=compressionRatio, allowAbs=allowAbs,
+        #                            selectedDeviceIndex=self.selectedDeviceIndex, debugMode=False)
