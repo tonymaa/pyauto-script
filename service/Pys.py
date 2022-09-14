@@ -84,10 +84,17 @@ class Pys(Ui_MainWindow):
         self.select_mode.currentIndexChanged.connect(self.selectProcess)
         self.butRun.clicked.connect(self.runScript)
         self.butStop.clicked.connect(self.stopScript)
+        self.select_device_id.currentIndexChanged.connect(self.selectDevice) # 选择abs设备
     def closing(self):
         pass
 
-
+    def selectDevice(self, e):
+        self.selectedDeviceIndex = e
+        # self.screentshot.setDisabled(False)
+        # self.save_template.setDisabled(False)
+        print(f"【debug】 select device index: {self.selectedDeviceIndex}, and deviceId is {self.deviceIds[e] if e >= 0 and e < len(self.deviceIds) else 'None'}")
+        if e >= 0 and e < len(self.deviceIds):
+            self.runningLog.setText(f'【选中设备】 {self.deviceIds[e]}')
 
     def selectWindowsMode(self, e):
         self.curMode = constant.WINDOWSMODE if e else constant.ABSMODE
@@ -98,7 +105,8 @@ class Pys(Ui_MainWindow):
         self.windowHeightInput.setDisabled(self.curMode == constant.ABSMODE)
 
         if self.curMode == constant.ABSMODE:
-            status, deviceIds = HandleUtils.adb_device_status()
+            self.hwnd = HandleUtils.adb_device_status()
+            status, deviceIds = self.hwnd
             self.select_device_id.clear()
             self.deviceIds = deviceIds
             if not status:
@@ -182,6 +190,7 @@ class Pys(Ui_MainWindow):
         if self.runThread is not None:
             QtWidgets.QMessageBox.information(None, 'Info', f'请先停止脚本!')
             return
+
         if self.hwnd is None or not self.hwnd[0]:
             QtWidgets.QMessageBox.information(None, 'warning', f'请选择窗口!')
             return

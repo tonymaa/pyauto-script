@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3d878adf-99bb-4ed8-8aab-95e84d3c8a14" name="Changes" comment="fix click bugs">
+    <list default="true" id="3d878adf-99bb-4ed8-8aab-95e84d3c8a14" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/process/edge/500_100_664x492_41_13_50_30_3_1_0_500_200_1000_500_90_1_None_None.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/process/edge/500_100_748x473_16_16_50_30_3_1_0_500_200_1000_500_90_1_None_None.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/process/tim/500_100_638x56_12_11_50_30_3_1_0_500_200_1000_500_60_1_None_None.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/DoClickUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/DoClickUtils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/Pys.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/Pys.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +20,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -42,7 +39,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../generate-autoScript-process" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/run.py" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -50,7 +47,7 @@
       <recent name="E:\learning\python\project\pyauto-script\process" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.run (1)">
+  <component name="RunManager" selected="Python.run">
     <configuration name="run (1)" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="auto-script" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -80,9 +77,9 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="D:\python37\python37.exe" />
+      <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
@@ -129,6 +126,7 @@
       <workItem from="1662887371368" duration="5408000" />
       <workItem from="1662903180612" duration="21000" />
       <workItem from="1662903266790" duration="5001000" />
+      <workItem from="1663116446156" duration="881000" />
     </task>
     <task id="LOCAL-00003" summary="windows mode finished">
       <created>1662790052842</created>
@@ -168,7 +166,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/main" />
+                        <option value="dev" />
                       </list>
                     </value>
                   </entry>
@@ -188,19 +186,19 @@
     <option name="LAST_COMMIT_MESSAGE" value="fix click bugs" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/pyauto_script$GetPositionUtils.coverage" NAME="PositionUtils Coverage Results" MODIFIED="1662472304154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
-    <SUITE FILE_PATH="coverage/pyauto_script$PositionUtils__1_.coverage" NAME="PositionUtils (1) Coverage Results" MODIFIED="1662481378425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
-    <SUITE FILE_PATH="coverage/auto_script$FindImage.coverage" NAME="FindImage Coverage Results" MODIFIED="1662342655146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/top/tony/autoScript" />
-    <SUITE FILE_PATH="coverage/pyauto_script$run.coverage" NAME="run Coverage Results" MODIFIED="1662908784809" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pyauto_script$AutoScriptApplication.coverage" NAME="AutoScriptApplication Coverage Results" MODIFIED="1662481592330" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/auto_script$GetScreenCaptureUtil.coverage" NAME="GetScreenCaptureUtil Coverage Results" MODIFIED="1662345674154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/top/tony/autoScript" />
+    <SUITE FILE_PATH="coverage/pyauto_script$run.coverage" NAME="run Coverage Results" MODIFIED="1663117314523" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/auto_script$AutoScriptApplication.coverage" NAME="AutoScriptApplication Coverage Results" MODIFIED="1662341695789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/top/tony/autoScript" />
-    <SUITE FILE_PATH="coverage/pyauto_script$main.coverage" NAME="main Coverage Results" MODIFIED="1662540355227" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pyauto_script$HandleSetUtils.coverage" NAME="HandleSetUtils Coverage Results" MODIFIED="1662474429099" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/pyauto_script$GetPositionUtils.coverage" NAME="PositionUtils Coverage Results" MODIFIED="1662472304154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/pyauto_script$run__1_.coverage" NAME="run (1) Coverage Results" MODIFIED="1662909013380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/auto_script$GetPositionUtils.coverage" NAME="GetPositionUtils Coverage Results" MODIFIED="1662364682229" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/top/tony/autoScript" />
-    <SUITE FILE_PATH="coverage/auto_script$main.coverage" NAME="main Coverage Results" MODIFIED="1662428789982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pyauto_script$HandleSetUtils.coverage" NAME="HandleSetUtils Coverage Results" MODIFIED="1662474429099" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/pyauto_script$AutoScriptApplication.coverage" NAME="run Coverage Results" MODIFIED="1662543404292" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pyauto_script$ScreenCaptureUtils.coverage" NAME="ScreenCaptureUtils Coverage Results" MODIFIED="1662513985356" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pyauto_script$main.coverage" NAME="main Coverage Results" MODIFIED="1662540355227" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pyauto_script$PositionUtils__1_.coverage" NAME="PositionUtils (1) Coverage Results" MODIFIED="1662481378425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/auto_script$HandleSetUtil.coverage" NAME="HandleSetUtil Coverage Results" MODIFIED="1662345096373" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/top/tony/autoScript" />
+    <SUITE FILE_PATH="coverage/auto_script$main.coverage" NAME="main Coverage Results" MODIFIED="1662428789982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/auto_script$FindImage.coverage" NAME="FindImage Coverage Results" MODIFIED="1662342655146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/top/tony/autoScript" />
+    <SUITE FILE_PATH="coverage/auto_script$GetScreenCaptureUtil.coverage" NAME="GetScreenCaptureUtil Coverage Results" MODIFIED="1662345674154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/top/tony/autoScript" />
   </component>
 </project>
