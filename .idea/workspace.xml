@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3d878adf-99bb-4ed8-8aab-95e84d3c8a14" name="Changes" comment="update">
+    <list default="true" id="3d878adf-99bb-4ed8-8aab-95e84d3c8a14" name="Changes" comment="adapt abd mode">
+      <change afterPath="$PROJECT_DIR$/image/favorite.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/capture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/screen_pic.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/template.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/御魂-悲鸣-组队/500_100_127x206_39_39_50_30_3_1_0_500_200_1000_500_95_1_None_None.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/御魂-悲鸣-组队/500_100_17x470_21_21_50_30_3_1_0_500_200_1000_500_90_1_None_None.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/御魂-悲鸣-组队/500_100_339x280_24_23_50_30_3_1_0_500_200_1000_500_90_1_None_None.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/御魂-悲鸣-组队/500_100_356x280_24_29_50_30_3_1_0_500_200_1000_500_90_1_None_None.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/御魂-悲鸣-组队/500_100_420x317_108_37_50_30_3_1_0_500_200_1000_500_90_1_None_None.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/御魂-悲鸣-组队/500_100_420x317_111_39_50_30_3_1_0_500_200_1000_500_90_1_None_None.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/御魂-悲鸣-组队/500_100_492x354_287_154_50_30_3_1_0_500_200_1000_500_90_1_None_None.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/御魂-悲鸣-组队/500_100_497x311_291_123_50_30_3_1_0_500_200_1000_500_90_1_None_None.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/御魂-悲鸣-组队/500_100_700x409_76_61_50_30_3_1_0_500_200_1000_500_90_1_None_None.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/御魂-悲鸣-组队/500_100_741x446_48_45_50_30_3_1_0_500_200_1000_500_90_1_None_None.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/service/Pys.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/Pys.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,10 +54,11 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/run.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/image" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\python\projects\pyauto-script\image" />
       <recent name="E:\learning\python\project\pyauto-script\process\blog" />
       <recent name="E:\learning\python\project\pyauto-script\process" />
     </key>
@@ -126,7 +142,9 @@
       <workItem from="1662887371368" duration="5408000" />
       <workItem from="1662903180612" duration="21000" />
       <workItem from="1662903266790" duration="5001000" />
-      <workItem from="1663116446156" duration="881000" />
+      <workItem from="1663116446156" duration="962000" />
+      <workItem from="1663148030599" duration="180000" />
+      <workItem from="1663208436256" duration="1203000" />
     </task>
     <task id="LOCAL-00003" summary="windows mode finished">
       <created>1662790052842</created>
@@ -149,7 +167,14 @@
       <option name="project" value="LOCAL" />
       <updated>1662892258928</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="adapt abd mode">
+      <created>1663117405701</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1663117405701</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,10 +208,11 @@
     <MESSAGE value="ui design finished!" />
     <MESSAGE value="windows mode finished" />
     <MESSAGE value="fix click bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix click bugs" />
+    <MESSAGE value="adapt abd mode" />
+    <option name="LAST_COMMIT_MESSAGE" value="adapt abd mode" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/pyauto_script$run.coverage" NAME="run Coverage Results" MODIFIED="1663117314523" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pyauto_script$run.coverage" NAME="run Coverage Results" MODIFIED="1663208715584" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/auto_script$AutoScriptApplication.coverage" NAME="AutoScriptApplication Coverage Results" MODIFIED="1662341695789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/top/tony/autoScript" />
     <SUITE FILE_PATH="coverage/pyauto_script$GetPositionUtils.coverage" NAME="PositionUtils Coverage Results" MODIFIED="1662472304154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/pyauto_script$run__1_.coverage" NAME="run (1) Coverage Results" MODIFIED="1662909013380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

@@ -1,4 +1,11 @@
-实现功能：
+#### 简介
+
+耦合度低，易维护，易更新的自动化脚本软件，配合Generate Process软件使用。Generate Process用于生成截图及图像点击信息，Pyauto-Script解析图像信息，按解析出的信息规则执行脚本。提供两套匹配算法，OpenCV支持的标准相关匹配算法CV_TM_CCOEFF_NORMED，及SIFT特征点匹配算法。
+
+
+
+#### 实现功能
+
 1. 不改变代码情况下，通过配置文件或被匹配上的图片名进行操作
 2. 实现另一套独立的图片截图/生成工具，进行截取图片，及被匹配后的一些列操作
 
@@ -26,13 +33,18 @@
       16. 【use matching position】 还是该文件名定义的坐标 #1；使用截图上匹配到的图片坐标 #2
       17. 【match event】匹配上后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py
       18. 【finish event】所有操作都执行完后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py 
-      如：
+          如：
           1. 1000_200_508x517_175_38_20_5_3_1_1_2000_100_1000_100_90_1_matchEvent_finishEvent.png 
           2. 自定义的event方法（matchEvent、finishEvent），可调用process域变量：eventAttribute，该类定义见model/EventAttribute.py
 
 
 5. 按照解析信息进行操作
 
-   
- 
-   
+
+
+
+#### 软件界面
+
+![image-20220915103414323](README.assets/image-20220915103414323.png)
+
+![image-20220915104024177](README.assets/image-20220915104024177.png)

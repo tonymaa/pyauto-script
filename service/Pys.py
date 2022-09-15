@@ -2,7 +2,7 @@ import cv2
 import win32gui
 from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.Qt import QButtonGroup
-from PyQt5.QtGui import QImage
+from PyQt5.QtGui import QImage, QIcon
 from subprocess import Popen, PIPE
 from program.pys_ui import Ui_MainWindow
 import os
@@ -43,6 +43,10 @@ class Pys(Ui_MainWindow):
         self.initEvent()
 
     def initMode(self, mainWindow):
+
+        mainWindow.setWindowTitle("Pyauto-Script")
+        mainWindow.setWindowIcon(QIcon("./image/favorite.png"))
+
         selectDeviceRadioGroup = QButtonGroup(mainWindow)
         selectDeviceRadioGroup.addButton(self.radioWindows, 0)
         selectDeviceRadioGroup.addButton(self.radioABD, 1)
