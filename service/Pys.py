@@ -1,21 +1,12 @@
-import cv2
-import win32gui
-from PyQt5 import QtCore, QtWidgets, QtGui
+from win32gui import MoveWindow
+from PyQt5 import QtWidgets
 from PyQt5.Qt import QButtonGroup
-from PyQt5.QtGui import QImage, QIcon
-from subprocess import Popen, PIPE
+from PyQt5.QtGui import QIcon
 from program.pys_ui import Ui_MainWindow
-import os
+from os import listdir
+from os.path import isdir, join
 import constant
-from numpy import array
 from utils.HandleUtils import HandleUtils
-from utils.ImageUtils import ImageUtils
-from utils.ScreenCaptureUtils import ScreenCaptureUtils
-from win32gui import SetForegroundWindow, GetWindowRect
-import win32com
-from PIL import ImageGrab
-import numpy as np
-from service.AutoScriptService import AutoScriptService
 from service.RunAutoScriptServiceThread import RunAutoScriptServiceThread
 constant.WINDOWSMODE = 0
 constant.ABSMODE = 1
@@ -152,7 +143,7 @@ class Pys(Ui_MainWindow):
             QtWidgets.QMessageBox.information(None, 'warnning', f'宽或高输入不合法')
             return
         self.inputWindowTitle.setText("窗口标题：" + hand_win_title)
-        win32gui.MoveWindow(self.windowHandler, 0, 0, self.windowWidth, self.windowHeight, True)
+        MoveWindow(self.windowHandler, 0, 0, self.windowWidth, self.windowHeight, True)
 
     def selectDir(self):
         curWorkingDir = QtWidgets.QFileDialog.getExistingDirectory(None, "Select Working Directory")
@@ -165,10 +156,10 @@ class Pys(Ui_MainWindow):
     def loadProcesses(self):
         # 读取目录下所有文件
         self.select_mode.clear()
-        files = os.listdir(self.curWorkingDir)
+        files = listdir(self.curWorkingDir)
         self.processes = []
         for process in files:
-            if os.path.isdir(os.path.join(self.curWorkingDir, process)):
+            if isdir(join(self.curWorkingDir, process)):
                 self.select_mode.addItem(process)
                 self.processes.append(process)
         self.selectProcess(0)

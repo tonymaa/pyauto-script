@@ -7,7 +7,7 @@ from utils.PositionUtils import PositionUtils, GetPosBySiftMatch
 from utils.ProcessesInfoUtils import ProcessesInfoUtils
 from utils.ScreenCaptureUtils import ScreenCaptureUtils
 from utils.HandleUtils import HandleUtils
-import win32gui
+from win32gui import MoveWindow
 from model.EventAttribute import EventAttribute
 """
     hwnd: 句柄，windows时参数为[title, handle]; adb时参数为[status, [devicesId...]]
@@ -51,7 +51,7 @@ class AutoScriptService:
         eventAttribute.setHwnd(hwnd)
         # 2. 将目标窗口resize成固定大小，如： height: 300, width: 500
         if not allowAbs: # windows, resize
-            win32gui.MoveWindow(hwnd[1],0,0,windowWidth,windowHeight,True)
+            MoveWindow(hwnd[1],0,0,windowWidth,windowHeight,True)
 
         # 3. 当匹配上模板文件夹（放置在指定目录下）中的其中一个时，读取该模板图片的文件名，
         # 4. 解析一些信息
@@ -218,7 +218,7 @@ class AutoScriptService:
                         template = process.get("image")
                         if compressionRatio != 1:
                             template = ImageUtils.img_compress(template, compressionRatio)
-                        matchingPosition = PositionUtils.template_matching(screen, template, originalScreenWidth, originalScreenHeight, process.get("threshold"))
+                        matchingPosition = PositionUtils.template_matching(screen, template, originalScreenWidth, originalScreenHeight, process.get("threshold"), runningLog)
                         if matchingPosition is None:
                             # if runningLog is not None:
                             #     runningLog.append("模板匹配失败...")

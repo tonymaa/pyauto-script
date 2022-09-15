@@ -1,10 +1,11 @@
-import threading
+
+from threading import Thread
 from service.AutoScriptService import AutoScriptService
 
-class RunAutoScriptServiceThread (threading.Thread):   #继承父类threading.Thread
+class RunAutoScriptServiceThread (Thread):   #继承父类threading.Thread
     def __init__(self, hwnd, curProcess, customDir, windowWidth, windowHeight, isBackgroungRunning,
             isKeepActive, screenshotsInterval, matchingMethod, compressionRatio, allowAbs, selectedDeviceIndex, runningLog):
-        threading.Thread.__init__(self)
+        Thread.__init__(self)
         self.hwnd = hwnd
         self.curProcess = curProcess
         self.customDir = customDir

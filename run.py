@@ -1,7 +1,5 @@
-from service.AutoScriptService import AutoScriptService
-import argparse
 import sys
-from PyQt5 import QtCore, QtWidgets, QtGui
+from PyQt5 import QtWidgets
 from service.Pys import Pys
 def main():
     app = QtWidgets.QApplication(sys.argv)

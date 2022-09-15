@@ -6,12 +6,7 @@
 import cv2
 from numpy import int32, float32
 
-from utils.HandleUtils import HandleUtils
 from utils.ImageUtils import ImageUtils
-
-# rc = ReadConfigFile()
-# other_setting = rc.read_config_other_setting()
-from utils.ScreenCaptureUtils import ScreenCaptureUtils
 
 
 class PositionUtils:
@@ -51,7 +46,7 @@ class PositionUtils:
         return pos, i
 
     @staticmethod
-    def template_matching(img_src, template, originalScreenWidth, originalScreenHeight, threshold):
+    def template_matching(img_src, template, originalScreenWidth, originalScreenHeight, threshold, runningLog = None):
         """获取坐标"""
         # img_src = cv2.cvtColor(img_src, cv2.COLOR_BGR2GRAY)
         # template = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
@@ -63,6 +58,9 @@ class PositionUtils:
             res = cv2.matchTemplate(img_src, template, cv2.TM_CCOEFF_NORMED)
             min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)  # 最小匹配度，最大匹配度，最小匹配度的坐标，最大匹配度的坐标
             print(f"【debug】 Maximum matching: {max_val}, threshold: {threshold}")
+            if runningLog is not None:
+                runningLog.append(f"最大匹配度: {max_val}, 阈值: {threshold}")
+                runningLog.moveCursor(runningLog.textCursor().End)
             if max_val >= threshold:  # 计算相对坐标
                 # position = [int(screen_width / img_src_width * (max_loc[0] + img_tmp_width / 2)),
                 #             int(screen_height / img_src_height * (max_loc[1] + img_tmp_height / 2))]

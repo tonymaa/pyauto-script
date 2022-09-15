@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-import time
-import random
+
+from time import sleep
+
+from random import random
 import win32com.client
 from win32gui import SetForegroundWindow, GetWindowRect
-from win32api import MAKELONG, SendMessage, PostMessage
+from win32api import MAKELONG, PostMessage
 from win32con import WM_LBUTTONUP, WM_LBUTTONDOWN, WM_ACTIVATE, WA_ACTIVE
-from pyautogui import position, click, moveTo, mouseDown, mouseUp
+from pyautogui import position, moveTo, mouseDown, mouseUp
 from utils.HandleUtils import HandleUtils
 
 
@@ -17,15 +19,15 @@ def windowsClickOnce(x, y, process, handleNum, i):
     PostMessage(handleNum, WM_LBUTTONDOWN, 0, position)  # 模拟鼠标按下
     print(f"【debug】 click down at ({x}, {y})")
     # 延时
-    sleepTime = (process["delayUpTime"] / 1000) + (random.random() * process["delayRandomUpTime"] / 1000)
+    sleepTime = (process["delayUpTime"] / 1000) + (random() * process["delayRandomUpTime"] / 1000)
     print(f"【debug】 sleep {sleepTime} second")
-    time.sleep(sleepTime)
+    sleep(sleepTime)
 
     # 微小偏移
-    x += random.random() * process["randomOffsetWhenUp"]
-    x -= random.random() * process["randomOffsetWhenUp"]
-    y += random.random() * process["randomOffsetWhenUp"]
-    y -= random.random() * process["randomOffsetWhenUp"]
+    x += random() * process["randomOffsetWhenUp"]
+    x -= random() * process["randomOffsetWhenUp"]
+    y += random() * process["randomOffsetWhenUp"]
+    y -= random() * process["randomOffsetWhenUp"]
     x = round(x)
     y = round(y)
     print(f"【debug】 click up at ({x}, {y})")
@@ -52,13 +54,13 @@ def frontWindowsClickOnce(x, y, process, handleNum, i, isKeepActive):
     # mouth down
     mouseDown()
     # 延时时间计算
-    sleepTime = (process["delayUpTime"] / 1000) + (random.random() * process["delayRandomUpTime"] / 1000)
+    sleepTime = (process["delayUpTime"] / 1000) + (random() * process["delayRandomUpTime"] / 1000)
     print(f"【debug】 sleep {sleepTime} second")
     # 微小偏移
-    x += random.random() * process["randomOffsetWhenUp"]
-    x -= random.random() * process["randomOffsetWhenUp"]
-    y += random.random() * process["randomOffsetWhenUp"]
-    y -= random.random() * process["randomOffsetWhenUp"]
+    x += random() * process["randomOffsetWhenUp"]
+    x -= random() * process["randomOffsetWhenUp"]
+    y += random() * process["randomOffsetWhenUp"]
+    y -= random() * process["randomOffsetWhenUp"]
     x = round(x)
     y = round(y)
     # move
@@ -71,13 +73,13 @@ def frontWindowsClickOnce(x, y, process, handleNum, i, isKeepActive):
 
 def adbClickOnce(x, y, process, device_id, i):
     # 延时
-    sleepTime = round(process["delayUpTime"] + (random.random() * process["delayRandomUpTime"]))
+    sleepTime = round(process["delayUpTime"] + (random() * process["delayRandomUpTime"]))
 
     # 微小偏移
-    toX = x + random.random() * process["randomOffsetWhenUp"]
-    toX -= random.random() * process["randomOffsetWhenUp"]
-    toY = y + random.random() * process["randomOffsetWhenUp"]
-    toY -= random.random() * process["randomOffsetWhenUp"]
+    toX = x + random() * process["randomOffsetWhenUp"]
+    toX -= random() * process["randomOffsetWhenUp"]
+    toY = y + random() * process["randomOffsetWhenUp"]
+    toY -= random() * process["randomOffsetWhenUp"]
     toX = round(toX)
     toY = round(toY)
 
@@ -111,11 +113,11 @@ def distributeClick(mode, process, matchingPosition, handleNum, isKeepActive, ev
         pass
 
     # 延时
-    sleepTime = (process["delayTime"] / 1000) + (random.random() * process["randomDelayTime"] / 1000)
+    sleepTime = (process["delayTime"] / 1000) + (random() * process["randomDelayTime"] / 1000)
     print(f"【debug】 sleep {sleepTime} second")
-    time.sleep(sleepTime)  # sleep
+    sleep(sleepTime)  # sleep
 
-    loopTimes = process["loopLeastCount"] + round(random.random() * process["loopRandomCount"])
+    loopTimes = process["loopLeastCount"] + round(random() * process["loopRandomCount"])
     for i in range(loopTimes):
         # 一次点击
 
@@ -128,8 +130,8 @@ def distributeClick(mode, process, matchingPosition, handleNum, isKeepActive, ev
         else: # 找图找到的坐标
             x = matchingPosition[0]
             y = matchingPosition[1]
-        x += round(random.random() * process["randomRightOffset"])
-        y += round(random.random() * process["randomBottomOffset"])
+        x += round(random() * process["randomRightOffset"])
+        y += round(random() * process["randomBottomOffset"])
 
         # 点击分发
         if mode == 1:
@@ -140,14 +142,14 @@ def distributeClick(mode, process, matchingPosition, handleNum, isKeepActive, ev
             adbClickOnce(x, y, process, handleNum, i)
 
         # 点击一次后的延时
-        sleepTime = (process["loopDelayLeastTime"] / 1000) + (random.random() * process["loopDelayRandomTime"] / 1000)
+        sleepTime = (process["loopDelayLeastTime"] / 1000) + (random() * process["loopDelayRandomTime"] / 1000)
         print(f"【debug】 sleep {sleepTime} second")
-        time.sleep(sleepTime)
+        sleep(sleepTime)
 
     # 结束延时
-    sleepTime = (process["endDelayLeastTime"] / 1000) + (random.random() * process["endDelayRandomTime"] / 1000)
+    sleepTime = (process["endDelayLeastTime"] / 1000) + (random() * process["endDelayRandomTime"] / 1000)
     print(f"【debug】 sleep {sleepTime} second")
-    time.sleep(sleepTime)
+    sleep(sleepTime)
 
     # 结束事件调用
     print(f"【debug】 invoke function finishEvent")

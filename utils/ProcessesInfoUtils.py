@@ -1,4 +1,5 @@
-import os
+from os import listdir
+from os.path import join, exists
 from numpy import uint8, fromfile
 import cv2
 from utils.ImageUtils import ImageUtils
@@ -13,20 +14,20 @@ class ProcessesInfoUtils:
             param customDir: 工作路径
             return: 目标目录的所有图片信息
         """
-        targetProcessPath = os.path.join(customDir, process)
-        if not os.path.exists(targetProcessPath):
+        targetProcessPath = join(customDir, process)
+        if not exists(targetProcessPath):
             print("<br>未找到目标文件夹或图片地址！即将退出！")
             return None
-        listdir = os.listdir(targetProcessPath)
-        if len(listdir) == 0:
+        listdirs = listdir(targetProcessPath)
+        if len(listdirs) == 0:
             print("<br>未找到目标文件夹或图片地址！")
             return None  # 脚本结束
         processesInfo = []
         fileTypes = (".png", ".jpg")
-        for fileName in listdir:
+        for fileName in listdirs:
             if len(fileName) >= 4 and fileName[-4:].lower() not in fileTypes: continue
             process = {}
-            filePath = os.path.join(targetProcessPath, fileName)
+            filePath = join(targetProcessPath, fileName)
             # image = cv2.imread(filePath)
             image = cv2.imdecode(fromfile(filePath, dtype=uint8), -1)  # 修复中文路径下opencv报错问题
             process["shape"] = image.shape[:2]  # 获取目标图片宽高
@@ -55,7 +56,7 @@ class ProcessesInfoUtils:
             process["endDelayRandomTime"] = int(split[13])  # 额外等待随机时间ms
             process["threshold"] = int(split[14]) / 100  # 匹配阈值，大于该值时，触发点击事件，范围 0 - 100
             process["useMatchingPosition"] = int(split[15]) # 使用该文件名定义的坐标 #1；还是截图上匹配到的图片坐标 #2
-            process["matchEvent"] = os.path.join(targetProcessPath, split[16] + ".py")  # 匹配上后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py
-            process["finishEvent"] = os.path.join(targetProcessPath, split[17] + ".py")  # 所有操作都执行完后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py
+            process["matchEvent"] = join(targetProcessPath, split[16] + ".py")  # 匹配上后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py
+            process["finishEvent"] = join(targetProcessPath, split[17] + ".py")  # 所有操作都执行完后的事件：自定义函数，函数须与当前图片同一文件夹，且函数文件名为：函数名.py
             processesInfo.append(process)
         return processesInfo
