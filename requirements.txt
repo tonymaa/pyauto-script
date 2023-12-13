@@ -1,0 +1,8 @@
+-i https://pypi.tuna.tsinghua.edu.cn/simple
+
+numpy~=1.24.3
+constant
+pyqt5
+pywin32
+pyautogui
+opencv-python
