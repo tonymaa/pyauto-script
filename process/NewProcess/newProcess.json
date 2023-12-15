@@ -1,5 +1,6 @@
 {
   "window": {
+    "selectWindow": true,
     "title": "TIM",
     "width": 400,
     "height": 400,
@@ -77,7 +78,7 @@
               },
               "onConditionCorrect": {
                 "exit": false,
-                "nextStep": "step2",
+                "nextStep": null,
                 "nextProcess": null,
                 "click": {
                   "// 注意": "时间单位均为ms",
@@ -113,8 +114,7 @@
           "name": "step2",
           "nextStep": "step3"
         }
-      ],
-      "mainStep": "step1"
+      ]
     }
   ]
 }
