@@ -62,7 +62,7 @@ class ScreenCaptureUtils:
         return im_opencv
 
     @staticmethod
-    def front_window_screen(hwnd, isKeepActive):
+    def front_window_screen(hwnd, isKeepActive=False):
         """PIL截图方法，不能被遮挡"""
         if isKeepActive:
             shell = win32com.client.Dispatch("WScript.Shell")

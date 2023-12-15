@@ -1,0 +1,113 @@
+{
+  "name": "newProcess",
+  "window": {
+    "title": "TIM",
+    "width": 400,
+    "height": 400,
+    "resize": true
+  },
+  "steps": [
+    {
+      "// describe": "循环当前step下的所有模板匹配当前窗口截图",
+      "name": "step1",
+      "// isAsync": "是否同步执行",
+      "isAsync": false,
+      "conditions": [
+          {
+            "// type": "average: 所有模板全部匹配获取到平均值",
+            "type": "average",
+            "// method": "templateMatching | siftMatching",
+            "method": "templateMatching",
+            "// operator": "> | < | >= | <= | !=",
+            "operator": ">",
+            "// threshold": " 0 ~ 1",
+            "threshold": 0.9
+        },
+        {
+          "// type": "count: 匹配到的模板个数",
+          "type": "count",
+          "// operator": "> | < | >= | <= | !=",
+          "operator": ">",
+          "count": 1
+        }
+      ],
+      "onConditionIncorrect": {
+
+      },
+      "onConditionCorrect": {
+        "// exit": "只会退出当前process",
+        "exit": false,
+        "nextStep": "step2",
+        "nextProcess": null,
+        "click": {
+
+        }
+      },
+      "timeout": {
+        "seconds": 100
+      },
+      "matchingTemplates": [
+        {
+          "src": "/",
+          "required": true,
+          "// area": "在这个窗口范围内匹配当前模板",
+          "area": [[0, 0], [30, 30]],
+          "condition": {
+            "// requireAllMethods": "true: 所有method都要匹配上，false: 只是required的method匹配上就行",
+            "requireAllMethods": false,
+            "matchingMethods": [
+              {
+                "method": "templateMatching",
+                "required": true,
+                "operator": ">",
+                "threshold": 0.9
+              },
+              {
+                "mathingMethod": "siftMatching",
+                "required": false,
+                "operator": ">",
+                "threshold": 0.95
+              }
+            ]
+          },
+          "onConditionCorrect": {
+            "exit": false,
+            "nextStep": "step2",
+            "nextProcess": null,
+            "click": {
+              "// 注意": "时间单位均为ms",
+              "// delay": "随机延时点击时间区间，闭区间",
+              "delay": [100, 140],
+              "// randomDelayTime": "delay后的随机延时",
+
+              "// position": "absolute: 相对于窗口左上角的位置(固定的), relative: 相对于当前模板左上角在窗口中的位置",
+              "position": "absolute",
+              "// xy": "只有当position为absolute时，才会用这个坐标",
+              "xy": [10, 20],
+              "// clickArea": "随机点击范围，是个矩形，传入宽和高，会在xy的基础上增加",
+              "clickArea": [40, 40],
+              "// delayUpTime": "随机延时抬起左击时间，闭区间",
+              "delayUpTime": [40, 150],
+              "// randomOffsetWhenUp": "鼠标down 与 up 期间，随机向各个角度的偏移量，一般几个像素点",
+              "randomOffsetWhenUp": [0, 6],
+              "// loopCount": "随机点击次数",
+              "loopCount": [1, 2],
+              "// loopDelayTime": "每次点击后的随机延时时间",
+              "loopDelayTime": [100, 300],
+              "// endDelayTime": "点击全部结束后的随机延时时间",
+              "endDelayTime": [100, 150]
+            }
+          },
+          "onConditionIncorrect": {
+
+          }
+        }
+      ]
+    },
+    {
+      "name": "step2",
+      "nextStep": "step3"
+    }
+  ],
+  "mainStep": "step1"
+}
