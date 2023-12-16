@@ -63,6 +63,7 @@ class ScreenCaptureUtils:
 
     @staticmethod
     def front_window_screen(hwnd, isKeepActive=False):
+        print("warning: windows屏幕缩放比例非100%时，会导致截图不全。x2, y2乘上对应比例可解决")
         """PIL截图方法，不能被遮挡"""
         if isKeepActive:
             shell = win32com.client.Dispatch("WScript.Shell")
