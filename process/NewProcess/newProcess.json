@@ -52,7 +52,7 @@
           "timeout": {
             "seconds": 100
           },
-          "matchingTemplates": [
+          "templates": [
             {
               "src": "/",
               "required": true,
@@ -109,10 +109,6 @@
               }
             }
           ]
-        },
-        {
-          "name": "step2",
-          "nextStep": "step3"
         }
       ]
     }

@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3d878adf-99bb-4ed8-8aab-95e84d3c8a14" name="Changes" comment="constractor process.json">
-      <change afterPath="$PROJECT_DIR$/model/WindowEntity.py" afterDir="false" />
+    <list default="true" id="3d878adf-99bb-4ed8-8aab-95e84d3c8a14" name="Changes" comment="captured screen">
+      <change afterPath="$PROJECT_DIR$/model/CapturedScreen.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/TemplateEntity.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/TemplateExecutor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_sop_script.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_sop_script.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/ProcessService.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/ProcessService.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/StepEntity.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/StepEntity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/NewProcess/newProcess.json" beforeDir="false" afterPath="$PROJECT_DIR$/process/NewProcess/newProcess.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/StepService.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/StepService.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/ScreenCaptureUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/ScreenCaptureUtils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +84,9 @@
       <recent name="E:\python\projects\pyauto-script\image" />
       <recent name="E:\learning\python\project\pyauto-script\process\blog" />
       <recent name="E:\learning\python\project\pyauto-script\process" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Tony\PycharmProjects\pyauto-script\service" />
     </key>
   </component>
   <component name="RunManager" selected="Python.run_sop_script">
@@ -243,7 +247,8 @@
       <workItem from="1677748888752" duration="1259000" />
       <workItem from="1702453139089" duration="6097000" />
       <workItem from="1702611007647" duration="14051000" />
-      <workItem from="1702737901953" duration="5316000" />
+      <workItem from="1702737901953" duration="5349000" />
+      <workItem from="1702794856587" duration="5059000" />
     </task>
     <task id="LOCAL-00003" summary="windows mode finished">
       <created>1662790052842</created>
@@ -318,7 +323,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702633271117</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="captured screen">
+      <option name="closed" value="true" />
+      <created>1702743713717</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1702743713717</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -357,7 +370,8 @@
     <MESSAGE value="add title and icon" />
     <MESSAGE value="requirements.txt" />
     <MESSAGE value="constractor process.json" />
-    <option name="LAST_COMMIT_MESSAGE" value="constractor process.json" />
+    <MESSAGE value="captured screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="captured screen" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/auto_script$main.coverage" NAME="main Coverage Results" MODIFIED="1662428789982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -373,7 +387,7 @@
     <SUITE FILE_PATH="coverage/pyauto_script$GetPositionUtils.coverage" NAME="PositionUtils Coverage Results" MODIFIED="1662472304154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/pyauto_script$run__1_.coverage" NAME="run (1) Coverage Results" MODIFIED="1662909013380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pyauto_script$AutoScriptApplication.coverage" NAME="run Coverage Results" MODIFIED="1662543404292" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pyauto_script$run_sop_script.coverage" NAME="run_sop_script Coverage Results" MODIFIED="1702743506276" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pyauto_script$run_sop_script.coverage" NAME="run_sop_script Coverage Results" MODIFIED="1702802348171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/auto_script$GetPositionUtils.coverage" NAME="GetPositionUtils Coverage Results" MODIFIED="1662364682229" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/top/tony/autoScript" />
     <SUITE FILE_PATH="coverage/pyauto_script$PositionUtils__1_.coverage" NAME="PositionUtils (1) Coverage Results" MODIFIED="1662481378425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
   </component>
