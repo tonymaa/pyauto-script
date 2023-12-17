@@ -2,7 +2,7 @@
   "window": {
     "selectWindow": true,
     "title": "TIM",
-    "width": 400,
+    "width": 657,
     "height": 400,
     "resize": true
   },
@@ -54,7 +54,7 @@
           },
           "templates": [
             {
-              "src": "/",
+              "src": "process\\NewProcess\\step1\\500_100_597x331_43_40_50_30_3_1_0_500_200_1000_500_90_1_None_None.png",
               "required": true,
               "// area": "在这个窗口范围内匹配当前模板",
               "area": [[0, 0], [30, 30]],

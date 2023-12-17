@@ -46,6 +46,26 @@ class PositionUtils:
         return pos, i
 
     @staticmethod
+    def template_matching_return_position(
+            img_src, template, originalScreenWidth, originalScreenHeight):
+        """获取坐标"""
+        # img_src = cv2.cvtColor(img_src, cv2.COLOR_BGR2GRAY)
+        # template = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
+        if (img_src is not None) and (template is not None):
+            img_tmp_height = template.shape[0]
+            img_tmp_width = template.shape[1]  # 获取模板图片的高和宽
+            resizeHeight = img_src.shape[0]
+            resizeWidth = img_src.shape[1]  # 匹配原图的宽高
+            res = cv2.matchTemplate(img_src, template, cv2.TM_CCOEFF_NORMED)
+            min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)  # 最小匹配度，最大匹配度，最小匹配度的坐标，最大匹配度的坐标
+
+            position = [round(originalScreenWidth / resizeWidth * max_loc[0]),
+                        round(originalScreenHeight / resizeHeight * max_loc[1])]
+            print(f"【debug】originalScreenWidth: {originalScreenWidth}, resizeWidth: {resizeWidth}")
+            print(f"【debug】 Matching on ({position[0]}, {position[1]}), max_val: {max_val}")
+            return max_val, position
+
+    @staticmethod
     def template_matching(img_src, template, originalScreenWidth, originalScreenHeight, threshold, runningLog = None):
         """获取坐标"""
         # img_src = cv2.cvtColor(img_src, cv2.COLOR_BGR2GRAY)
@@ -94,7 +114,7 @@ class GetPosBySiftMatch:
         return pos, i
 
     @staticmethod
-    def sift_matching(target_sift, screen_sift, target_hw, target_img, screen_img, debug_status):
+    def sift_matching(target_sift, screen_sift, target_hw, target_img, screen_img, debug_status=False):
         """
         特征点匹配，准确度不好说，用起来有点难受，不是那么准确（比如有两个按钮的情况下），但是待检测的目标图片不受缩放、旋转的影响
         :param target_sift: 目标的特征点信息

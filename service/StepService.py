@@ -41,7 +41,8 @@ class StepService:
             if IMAGE_COMPRESS_RADIO != 1:
                 screen = ImageUtils.img_compress(screen, IMAGE_COMPRESS_RADIO)
             self.currentCapturedScreen = CapturedScreen(**{
-                "screen": screen, "originalHeight": originalHeight, "originalWidth": originalWidth
+                "screen": screen, "originalHeight": originalHeight, "originalWidth": originalWidth,
+                "sift": ImageUtils.get_sift(screen)  # 获取特征点
             })
             self.onCaptured()
             time.sleep(1)

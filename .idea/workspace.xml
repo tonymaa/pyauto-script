@@ -4,14 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3d878adf-99bb-4ed8-8aab-95e84d3c8a14" name="Changes" comment="captured screen">
-      <change afterPath="$PROJECT_DIR$/model/CapturedScreen.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/TemplateEntity.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/TemplateExecutor.py" afterDir="false" />
+    <list default="true" id="3d878adf-99bb-4ed8-8aab-95e84d3c8a14" name="Changes" comment="template executor">
+      <change afterPath="$PROJECT_DIR$/constants/Constants.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/constants/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/OperatorUtils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/StepEntity.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/StepEntity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/CapturedScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/CapturedScreen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/TemplateEntity.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/TemplateEntity.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/process/NewProcess/newProcess.json" beforeDir="false" afterPath="$PROJECT_DIR$/process/NewProcess/newProcess.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/StepService.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/StepService.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/TemplateExecutor.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/TemplateExecutor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/PositionUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/PositionUtils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,7 +251,7 @@
       <workItem from="1702453139089" duration="6097000" />
       <workItem from="1702611007647" duration="14051000" />
       <workItem from="1702737901953" duration="5349000" />
-      <workItem from="1702794856587" duration="5059000" />
+      <workItem from="1702794856587" duration="16219000" />
     </task>
     <task id="LOCAL-00003" summary="windows mode finished">
       <created>1662790052842</created>
@@ -331,7 +334,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702743713717</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="template executor">
+      <option name="closed" value="true" />
+      <created>1702802453460</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1702802453461</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -371,7 +382,8 @@
     <MESSAGE value="requirements.txt" />
     <MESSAGE value="constractor process.json" />
     <MESSAGE value="captured screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="captured screen" />
+    <MESSAGE value="template executor" />
+    <option name="LAST_COMMIT_MESSAGE" value="template executor" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/auto_script$main.coverage" NAME="main Coverage Results" MODIFIED="1662428789982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -387,7 +399,7 @@
     <SUITE FILE_PATH="coverage/pyauto_script$GetPositionUtils.coverage" NAME="PositionUtils Coverage Results" MODIFIED="1662472304154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/pyauto_script$run__1_.coverage" NAME="run (1) Coverage Results" MODIFIED="1662909013380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pyauto_script$AutoScriptApplication.coverage" NAME="run Coverage Results" MODIFIED="1662543404292" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pyauto_script$run_sop_script.coverage" NAME="run_sop_script Coverage Results" MODIFIED="1702802348171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pyauto_script$run_sop_script.coverage" NAME="run_sop_script Coverage Results" MODIFIED="1702826926023" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/auto_script$GetPositionUtils.coverage" NAME="GetPositionUtils Coverage Results" MODIFIED="1662364682229" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/top/tony/autoScript" />
     <SUITE FILE_PATH="coverage/pyauto_script$PositionUtils__1_.coverage" NAME="PositionUtils (1) Coverage Results" MODIFIED="1662481378425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
   </component>
