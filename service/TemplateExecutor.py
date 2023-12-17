@@ -8,6 +8,7 @@ from numpy import uint8, fromfile
 from constants.Constants import MatchingConstants
 from model.CapturedScreen import CapturedScreen
 from model.TemplateEntity import TemplateEntity, TemplateConditionMethod, TemplateCondition
+from service.ActionsExecutor import ActionsExecutor
 from utils.ImageUtils import ImageUtils
 from utils.OperatorUtils import OperatorUtils
 from utils.PositionUtils import PositionUtils, GetPosBySiftMatch
@@ -21,6 +22,7 @@ class TemplateExecutor:
         self.matchingArea = self.template.area
         self.required = self.template.required
         self.condition: TemplateCondition = self.template.condition
+        self.onConditionCorrect = self.template.onConditionCorrect
 
 
     def execute(self, screen: CapturedScreen):
@@ -28,6 +30,9 @@ class TemplateExecutor:
         ImageUtils.show_img(screen.screen)
         position = self.match(screen)
         print(f"matched: {position is not None}, position: {position}")
+        if position is None: return False
+        actionsExecutor = ActionsExecutor(self.onConditionCorrect)
+        actionsExecutor.execute()
 
     def init_image(self):
         image = cv2.imdecode(fromfile(self.template.src, dtype=uint8), -1)  # 修复中文路径下opencv报错问题

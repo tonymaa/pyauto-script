@@ -1,15 +1,16 @@
 from typing import List
 
+from model.ActionsEntity import ActionsEntity
+
 
 class TemplateEntity:
     def __init__(self, **kwargs):
-        self.onConditionCorrect = None
         self.area = None
         self.required = None
         self.src = None
         self.__dict__.update(kwargs)
         self.condition: TemplateCondition = TemplateCondition(**kwargs["condition"])
-
+        self.onConditionCorrect: ActionsEntity = ActionsEntity(**kwargs["onConditionCorrect"])
     def printObj(self):
         print(self.__dict__)
 
