@@ -1,4 +1,4 @@
-
+from typing import List
 class ActionsEntity:
     def __init__(self, **kwargs):
         self.exit = None
@@ -11,11 +11,11 @@ class ActionsEntity:
 
 class ClickAction:
     def __init__(self, **kwargs):
-        self.delay = None
+        self.delay: List[int] = None
         self.position = None
-        self.xy = None
+        self.xy: List[int] = None
         self.clickArea = None
-        self.delayUpTime = None
+        self.delayUpTime: List[int] = None
         self.randomOffsetWhenUp = None
         self.loopCount = None
         self.loopDelayTime = None
