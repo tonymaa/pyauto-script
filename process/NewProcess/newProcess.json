@@ -54,7 +54,7 @@
           },
           "templates": [
             {
-              "src": "process\\NewProcess\\step1\\500_100_597x331_43_40_50_30_3_1_0_500_200_1000_500_90_1_None_None.png",
+              "src": "process\\NewProcess\\step1\\500_100_613x52_29_22_50_30_3_1_0_500_200_1000_500_90_1_None_None.png",
               "required": true,
               "// area": "在这个窗口范围内匹配当前模板",
               "area": [[0, 0], [30, 30]],
@@ -87,11 +87,11 @@
                   "// randomDelayTime": "delay后的随机延时",
 
                   "// position": "absolute: 相对于窗口左上角的位置x=0,y=0(固定的), relative: 相对于当前模板左上角在窗口中的位置",
-                  "position": "absolute",
+                  "position": "relative",
                   "// xy": "相对于匹配位置的偏移量",
-                  "xy": [10, 20],
+                  "xy": [240, 10],
                   "// clickArea": "随机点击范围，是个矩形，传入宽和高，会在xy的基础上增加",
-                  "clickArea": [40, 40],
+                  "clickArea": [29, 22],
                   "// delayUpTime": "随机延时抬起左击时间，闭区间",
                   "delayUpTime": [40, 150],
                   "// randomOffsetWhenUp": "鼠标down 与 up 期间，随机向各个角度的偏移量，一般几个像素点",
