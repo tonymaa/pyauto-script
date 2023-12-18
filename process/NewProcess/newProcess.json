@@ -86,9 +86,9 @@
                   "delay": [100, 140],
                   "// randomDelayTime": "delay后的随机延时",
 
-                  "// position": "absolute: 相对于窗口左上角的位置(固定的), relative: 相对于当前模板左上角在窗口中的位置",
+                  "// position": "absolute: 相对于窗口左上角的位置x=0,y=0(固定的), relative: 相对于当前模板左上角在窗口中的位置",
                   "position": "absolute",
-                  "// xy": "只有当position为absolute时，才会用这个坐标",
+                  "// xy": "相对于匹配位置的偏移量",
                   "xy": [10, 20],
                   "// clickArea": "随机点击范围，是个矩形，传入宽和高，会在xy的基础上增加",
                   "clickArea": [40, 40],

@@ -6,6 +6,7 @@ import cv2
 from numpy import uint8, fromfile
 
 from constants.Constants import MatchingConstants
+from model.WindowEntity import WindowEntity
 from model.CapturedScreen import CapturedScreen
 from model.TemplateEntity import TemplateEntity, TemplateConditionMethod, TemplateCondition
 from service.ActionsExecutor import ActionsExecutor
@@ -16,7 +17,8 @@ from utils.PositionUtils import PositionUtils, GetPosBySiftMatch
 IMAGE_COMPRESS_RADIO = 1
 
 class TemplateExecutor:
-    def __init__(self, template: TemplateEntity):
+    def __init__(self, window: WindowEntity, template: TemplateEntity):
+        self.window = window
         self.template: TemplateEntity = template
         self.image, self.shape, self.sift = self.init_image()
         self.matchingArea = self.template.area
@@ -31,7 +33,7 @@ class TemplateExecutor:
         position = self.match(screen)
         print(f"matched: {position is not None}, position: {position}")
         if position is None: return False
-        actionsExecutor = ActionsExecutor(self.onConditionCorrect)
+        actionsExecutor = ActionsExecutor(self.window, self.onConditionCorrect, position)
         actionsExecutor.execute()
 
     def init_image(self):

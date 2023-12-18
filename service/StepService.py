@@ -49,4 +49,4 @@ class StepService:
 
     def loadTemplatesExecutor(self):
         for template in self.step.templates:
-            self.templatesExecutors.append(TemplateExecutor(template))
+            self.templatesExecutors.append(TemplateExecutor(self.window, template))
