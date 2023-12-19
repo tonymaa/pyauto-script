@@ -43,10 +43,10 @@ class ClickActionExecutor:
         for count in range(0, randint(self.clickAction.loopCount[0], self.clickAction.loopCount[1])):
             print(f"<br>【匹配坐标】: [ {x} , {y} ] <br>窗口名称: [ {self.window.title} ]， 第{count + 1}次循环")
             self.clickOnce(x + self.clickAction.clickArea[0] * random(), y + self.clickAction.clickArea[1] * random())
-            time.sleep(self.clickAction.loopDelayTime / 1000)
+            time.sleep((self.clickAction.loopDelayTime[0] / 1000) + (random() * self.clickAction.loopDelayTime[1] / 1000))
         # # 鼠标回去
         moveTo(now_pos[0], now_pos[1])
-        time.sleep(self.clickAction.endDelayTime / 1000)
+        time.sleep((self.clickAction.endDelayTime[0] / 1000) + (random() * self.clickAction.endDelayTime[1] / 1000))
 
     def clickOnce(self, x, y):
         x = round(x)
@@ -58,10 +58,10 @@ class ClickActionExecutor:
         delay = (self.clickAction.delay[0] / 1000) + (random() * self.clickAction.delay[1] / 1000)
         time.sleep(delay)
         # # mouth down
+        print(f"【debug】 mouse down")
         mouseDown()
         # # 延时时间计算
         delayUpTime = (self.clickAction.delayUpTime[0] / 1000) + (random() * self.clickAction.delayUpTime[1] / 1000)
-        print(f"【debug】 sleep {delayUpTime} second")
         # 微小偏移 [-randomOffsetWhenUp[1], -randomOffsetWhenUp[0]] && [randomOffsetWhenUp[0], randomOffsetWhenUp[1]]
         randomOffset = lambda: (self.clickAction.randomOffsetWhenUp[0] +
                                 (random() * (self.clickAction.randomOffsetWhenUp[1] -
@@ -73,6 +73,9 @@ class ClickActionExecutor:
         x = round(x)
         y = round(y)
         # move
+        print(f"【debug】 sleep {delayUpTime} second")
+        print(f"【debug】 x, y move to ({x}, {y})")
         moveTo(x, y, duration=delayUpTime)
         # # mouth up
+        print(f"【debug】 mouse up")
         mouseUp()

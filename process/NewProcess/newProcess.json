@@ -69,10 +69,8 @@
                     "threshold": 0.9
                   },
                   {
-                    "mathingMethod": "siftMatching",
-                    "required": false,
-                    "operator": ">",
-                    "threshold": 0.95
+                    "method": "siftMatching",
+                    "required": false
                   }
                 ]
               },

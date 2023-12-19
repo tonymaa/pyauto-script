@@ -6,6 +6,7 @@ import cv2
 from numpy import uint8, fromfile
 
 from constants.Constants import MatchingConstants
+from model.Configurations import Configurations
 from model.WindowEntity import WindowEntity
 from model.CapturedScreen import CapturedScreen
 from model.TemplateEntity import TemplateEntity, TemplateConditionMethod, TemplateCondition
@@ -29,7 +30,6 @@ class TemplateExecutor:
 
     def execute(self, screen: CapturedScreen):
         print(f"start executing template: {self.template.src}")
-        ImageUtils.show_img(screen.screen)
         position = self.match(screen)
         print(f"matched: {position is not None}, position: {position}")
         if position is None: return False
@@ -50,6 +50,7 @@ class TemplateExecutor:
             if matched: return position
             print(f"matchingMethod: {matchingMethod.__dict__}")
             if matchingMethod.method == MatchingConstants.METHOD_TEMPLATE_MATCHING:
+                print("start template matching.....")
                 value, position = PositionUtils.template_matching_return_position(screen.screen,
                                                                    self.image,
                                                                    screen.originalWidth,
@@ -57,7 +58,8 @@ class TemplateExecutor:
                                                                    )
                 matched = OperatorUtils.operateJudgement(value, matchingMethod.threshold, matchingMethod.operator)
 
-            elif matchingMethod == MatchingConstants.METHOD_SIFT_MATCHING:
+            elif matchingMethod.method == MatchingConstants.METHOD_SIFT_MATCHING:
+                print("start sift matching.....")
                 position = GetPosBySiftMatch.sift_matching(self.sift, self.sift,
                                                                    (self.shape[1], self.shape[0]),
                                                                    self.image, screen.screen)

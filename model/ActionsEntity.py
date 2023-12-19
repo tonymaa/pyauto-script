@@ -18,8 +18,8 @@ class ClickAction:
         self.delayUpTime: List[int] = None # ms
         self.randomOffsetWhenUp = None # 向各个方向的偏移量
         self.loopCount: List[int] = None # [count1, count2]点击循环 count1 ~ count2次
-        self.loopDelayTime = None # ms
-        self.endDelayTime = None
+        self.loopDelayTime: List[int] = None # ms
+        self.endDelayTime: List[int] = None
         self.__dict__.update(kwargs)
 
     def printObj(self):

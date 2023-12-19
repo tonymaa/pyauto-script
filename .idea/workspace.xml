@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3d878adf-99bb-4ed8-8aab-95e84d3c8a14" name="Changes" comment="click action">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auto-script.iml" beforeDir="false" afterPath="$PROJECT_DIR$/auto-script.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/ActionsEntity.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/ActionsEntity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Configurations.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/Configurations.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/process/NewProcess/newProcess.json" beforeDir="false" afterPath="$PROJECT_DIR$/process/NewProcess/newProcess.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/ActionsExecutor.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/ActionsExecutor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/TemplateExecutor.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/TemplateExecutor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/PositionUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/PositionUtils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +63,7 @@
     "Python tests.Python tests for ScreenCaptureUtilsTest.TestStringMethods.test_upper.executor": "Run",
     "Python tests.Python tests for ScreenCaptureUtilsTest.TestStringMethods.test_windows_screen_capture.executor": "Run",
     "Python.run.executor": "Run",
-    "Python.run_sop_script.executor": "Debug",
+    "Python.run_sop_script.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -381,7 +382,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702883042920</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="click action">
+      <option name="closed" value="true" />
+      <created>1702959455875</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1702959455875</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -430,6 +439,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/service/TemplateExecutor.py</url>
+          <line>48</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -449,7 +465,7 @@
     <SUITE FILE_PATH="coverage/auto_script$GetScreenCaptureUtil.coverage" NAME="GetScreenCaptureUtil Coverage Results" MODIFIED="1662345674154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/top/tony/autoScript" />
     <SUITE FILE_PATH="coverage/auto_script$HandleSetUtil.coverage" NAME="HandleSetUtil Coverage Results" MODIFIED="1662345096373" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/top/tony/autoScript" />
     <SUITE FILE_PATH="coverage/pyauto_script$GetPositionUtils.coverage" NAME="PositionUtils Coverage Results" MODIFIED="1662472304154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
-    <SUITE FILE_PATH="coverage/pyauto_script$run_sop_script.coverage" NAME="run_sop_script Coverage Results" MODIFIED="1702882672948" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pyauto_script$run_sop_script.coverage" NAME="run_sop_script Coverage Results" MODIFIED="1702969833604" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/auto_script$FindImage.coverage" NAME="FindImage Coverage Results" MODIFIED="1662342655146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/top/tony/autoScript" />
     <SUITE FILE_PATH="coverage/pyauto_script$ScreenCaptureUtils.coverage" NAME="ScreenCaptureUtils Coverage Results" MODIFIED="1662513985356" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pyauto_script$AutoScriptApplication.coverage" NAME="run Coverage Results" MODIFIED="1662543404292" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

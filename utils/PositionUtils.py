@@ -6,6 +6,7 @@
 import cv2
 from numpy import int32, float32
 
+from model.Configurations import Configurations
 from utils.ImageUtils import ImageUtils
 
 
@@ -63,6 +64,9 @@ class PositionUtils:
                         round(originalScreenHeight / resizeHeight * max_loc[1])]
             print(f"【debug】originalScreenWidth: {originalScreenWidth}, resizeWidth: {resizeWidth}")
             print(f"【debug】 Matching on ({position[0]}, {position[1]}), max_val: {max_val}")
+            if Configurations.debugMode:
+                draw_img = ImageUtils.draw_pos_in_img(img_src.copy(), position, [img_tmp_height, img_tmp_width])
+                ImageUtils.show_img_and_title(draw_img, f"Template Matching - Similarity: {max_val}")
             return max_val, position
 
     @staticmethod
@@ -159,7 +163,7 @@ class GetPosBySiftMatch:
             '''
             if m.distance < 0.6 * n.distance:  # m表示大图像上最匹配点的距离，n表示次匹配点的距离，若比值小于0.5则舍弃
                 good.append(m)
-        if debug_status:
+        if Configurations.debugMode:
             print(f"<br>匹配角点数量：[ {len(good)} ] ,目标数量：[ {min_match_count} ]")
         if len(good) > min_match_count:
             src_pts = float32([kp1[m.queryIdx].pt for m in good]).reshape(-1, 1, 2)
@@ -167,7 +171,7 @@ class GetPosBySiftMatch:
             m, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
 
             # 绘制匹配成功的连线
-            if debug_status:
+            if Configurations.debugMode:
                 matches_mask = mask.ravel().tolist()  # ravel方法将数据降维处理，最后并转换成列表格式
                 draw_params = dict(matchColor=(0, 255, 0),  # draw matches in green color
                                    singlePointColor=None,
@@ -175,7 +179,7 @@ class GetPosBySiftMatch:
                                    flags=2)
                 img3 = cv2.drawMatches(target_img, kp1, screen_img, kp2, good, None, **draw_params)  # 生成cv2格式图片
                 img3 = cv2.cvtColor(img3, cv2.COLOR_BGR2RGB)  # 转RGB
-                ImageUtils.show_img_and_title(img3, "特征点匹配")  # 测试显示
+                ImageUtils.show_img_and_title(img3, "Sift Matching")  # 测试显示
 
             # 计算中心坐标
             h, w = target_hw
