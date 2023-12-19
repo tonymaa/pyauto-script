@@ -96,7 +96,7 @@
                   "delayUpTime": [40, 150],
                   "// randomOffsetWhenUp": "鼠标down 与 up 期间，随机向各个角度的偏移量，一般几个像素点",
                   "randomOffsetWhenUp": [0, 6],
-                  "// loopCount": "随机点击次数",
+                  "// loopCount": "随机点击次数 1 - 2次",
                   "loopCount": [1, 2],
                   "// loopDelayTime": "每次点击后的随机延时时间",
                   "loopDelayTime": [100, 300],

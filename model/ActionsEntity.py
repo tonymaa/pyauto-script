@@ -11,14 +11,14 @@ class ActionsEntity:
 
 class ClickAction:
     def __init__(self, **kwargs):
-        self.delay: List[int] = None
-        self.position = None
-        self.xy: List[int] = None
-        self.clickArea = None
-        self.delayUpTime: List[int] = None
-        self.randomOffsetWhenUp = None
-        self.loopCount = None
-        self.loopDelayTime = None
+        self.delay: List[int] = None # ms
+        self.position = None # absolute: 绝对坐标 , relative找到的图坐标
+        self.xy: List[int] = None # [x, y]
+        self.clickArea: List[int] = None # [width, height]
+        self.delayUpTime: List[int] = None # ms
+        self.randomOffsetWhenUp = None # 向各个方向的偏移量
+        self.loopCount: List[int] = None # [count1, count2]点击循环 count1 ~ count2次
+        self.loopDelayTime = None # ms
         self.endDelayTime = None
         self.__dict__.update(kwargs)
 

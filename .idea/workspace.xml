@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3d878adf-99bb-4ed8-8aab-95e84d3c8a14" name="Changes" comment="click action">
-      <change afterPath="$PROJECT_DIR$/model/Configurations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants/Constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants/Constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auto-script.iml" beforeDir="false" afterPath="$PROJECT_DIR$/auto-script.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/ActionsEntity.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/ActionsEntity.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/process/NewProcess/newProcess.json" beforeDir="false" afterPath="$PROJECT_DIR$/process/NewProcess/newProcess.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/ActionsExecutor.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/ActionsExecutor.py" afterDir="false" />
     </list>
@@ -372,7 +373,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702880786296</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="click action">
+      <option name="closed" value="true" />
+      <created>1702883042920</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1702883042920</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

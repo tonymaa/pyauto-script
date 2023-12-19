@@ -5,7 +5,7 @@ from typing import List
 from pyautogui import position, moveTo, mouseDown, mouseUp
 from utils.HandleUtils import HandleUtils
 from constants.Constants import PositionTypeConstants
-from random import random
+from random import random, randint
 import time
 
 class ActionsExecutor:
@@ -30,6 +30,7 @@ class ClickActionExecutor:
         self.matchedPosition = matchedPosition
 
     def execute(self):
+        now_pos = position()  # 记录当前鼠标位置
         x, y = [0, 0]
         if self.clickAction.position == PositionTypeConstants.POSITION_ABSOLUTE:
             x, y = self.clickAction.xy
@@ -39,7 +40,17 @@ class ClickActionExecutor:
         x1, y1, x2, y2 = GetWindowRect(self.window.handleNum)
         x += x1
         y += y1
-        now_pos = position()  # 记录当前鼠标位置
+        for count in range(0, randint(self.clickAction.loopCount[0], self.clickAction.loopCount[1])):
+            print(f"<br>【匹配坐标】: [ {x} , {y} ] <br>窗口名称: [ {self.window.title} ]， 第{count + 1}次循环")
+            self.clickOnce(x + self.clickAction.clickArea[0] * random(), y + self.clickAction.clickArea[1] * random())
+            time.sleep(self.clickAction.loopDelayTime / 1000)
+        # # 鼠标回去
+        moveTo(now_pos[0], now_pos[1])
+        time.sleep(self.clickAction.endDelayTime / 1000)
+
+    def clickOnce(self, x, y):
+        x = round(x)
+        y = round(y)
         # # 鼠标移至目标
         moveTo(x, y)
         print(f"【debug】 x, y move to ({x}, {y})")
@@ -53,8 +64,9 @@ class ClickActionExecutor:
         print(f"【debug】 sleep {delayUpTime} second")
         # 微小偏移 [-randomOffsetWhenUp[1], -randomOffsetWhenUp[0]] && [randomOffsetWhenUp[0], randomOffsetWhenUp[1]]
         randomOffset = lambda: (self.clickAction.randomOffsetWhenUp[0] +
-                            (random() * (self.clickAction.randomOffsetWhenUp[1] - self.clickAction.randomOffsetWhenUp[
-                                0]))
+                                (random() * (self.clickAction.randomOffsetWhenUp[1] -
+                                             self.clickAction.randomOffsetWhenUp[
+                                                 0]))
                                 ) * (random() > 0.5 if 1 else -1)
         x += randomOffset()
         y += randomOffset()
@@ -64,6 +76,3 @@ class ClickActionExecutor:
         moveTo(x, y, duration=delayUpTime)
         # # mouth up
         mouseUp()
-        # # 鼠标回去
-        moveTo(now_pos[0], now_pos[1])
-        print(f"<br>【点击坐标: [ {x} , {y} ] <br>窗口名称: [ {self.window.title} ]")
